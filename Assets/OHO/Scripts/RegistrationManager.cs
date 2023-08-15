@@ -267,6 +267,7 @@ public class RegistrationManager : MonoBehaviour
                             "\"type\":\"" + "1" + "\"," +
                                "\"password\":\"" + createPassword.text + "\"}";
                         WebServices.instance.SendRequest(RequestType.ResetPassword, requestData, true, OnServerResponseFound);
+                        MainDashboardScreen.instance.DestroyScreen(MainDashboardScreen.MainDashboardScreens.Registration);
                     }
                 }
                 break;

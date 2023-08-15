@@ -4209,7 +4209,7 @@ MonoBehaviour:
   - {fileID: 1079744080435960297}
   userNameText: {fileID: 3395283933099527268}
   drawerUsernameText: {fileID: 5765159932973197607}
-  profilePic: {fileID: 0}
+  profilePic: {fileID: 8855813293629562529}
   frameImage: {fileID: 0}
   activeBottomIcons: []
   deactiveBottomIcons: []
@@ -6470,7 +6470,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 946b551cf726c5446a57ec7bd9fe1b86, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8de3ef75b244f9d4a88b0c0e13964fce, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -7811,7 +7811,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 946b551cf726c5446a57ec7bd9fe1b86, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b91043413b738ef43abee319c63b5ff1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -19832,7 +19832,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4379971308145969245
 RectTransform:
   m_ObjectHideFlags: 0
