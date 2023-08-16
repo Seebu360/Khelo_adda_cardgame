@@ -23,6 +23,8 @@ public class P_TableSettings : MonoBehaviour
         ts = new P_TableSettingClass();
         ts.IsVociemsg = 0;
         ts.IsTextmsg = 0;
+        // ts.IsVociemsg = int.Parse(PlayerPrefs.GetString("isVociemsg"));
+        // ts.IsTextmsg = int.Parse(PlayerPrefs.GetString("isTextmsg"));
         ts.Issound = int.Parse(PlayerPrefs.GetString("issound"));
         ts.Isvibrations = int.Parse(PlayerPrefs.GetString("isviberate"));
 
@@ -90,15 +92,19 @@ public class P_TableSettings : MonoBehaviour
                     if (isVociemsg == 1)
                     {
                         isVociemsg = 0;
+                        PlayerPrefs.SetString("isVociemsg", isVociemsg.ToString());
                         Voiceon.SetActive(false);
                         VoiceOff.SetActive(true);
                     }
                     else
                     {
                         isVociemsg = 1;
+                        PlayerPrefs.SetString("isVociemsg", isVociemsg.ToString());
                         Voiceon.SetActive(true);
                         VoiceOff.SetActive(false);
                     }
+
+                    Debug.Log(isVociemsg + "is voice msz");
                 }
                 break;
             case "textmsg":
@@ -106,6 +112,7 @@ public class P_TableSettings : MonoBehaviour
                     if (isTextmsg == 1)
                     {
                         isTextmsg = 0;
+                        PlayerPrefs.SetString("isTextmsg", isTextmsg.ToString());
                         Texton.SetActive(false);
                         TextOff.SetActive(true);
 
@@ -113,6 +120,7 @@ public class P_TableSettings : MonoBehaviour
                     else
                     {
                         isTextmsg = 1;
+                        PlayerPrefs.SetString("isTextmsg", isTextmsg.ToString());
                         Texton.SetActive(true);
                         TextOff.SetActive(false);
 
