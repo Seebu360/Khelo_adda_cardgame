@@ -30,6 +30,9 @@ public class CommonScreen : MonoBehaviour
                 break;
         }
 
-        //MainDashboardScreen.instance.DestroyScreen(screen);
+       // MainDashboardScreen.instance.DestroyScreen(screen);
+        MainDashboardScreen.instance.bottomMenu.SetActive(true);
     }
 }
+
+
