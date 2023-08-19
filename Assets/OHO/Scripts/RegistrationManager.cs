@@ -44,7 +44,7 @@ public class RegistrationManager : MonoBehaviour
     private string registrationEmailSuccess, registrationPasswordSuccess, registrationUserIdSuccess;
     private bool isLoginAfterRegistration;
     string otp;
-    public Text registerTimerText, registertOtpCountText, forgetTimerText, forgetOtpCountText;
+    public Text registerTimerText, registertOtpCountText, forgetTimerText, forgetOtpCountText , loginTimerText, LoginOtpCountText;
     Text currentTimerText;
     Dictionary<int, bool> mobileOTOFields = new Dictionary<int, bool>();
     public InputField[] mobilePassFields;
@@ -135,6 +135,7 @@ public class RegistrationManager : MonoBehaviour
 
     private void FixedUpdate()
     {
+       
         /*if(forgotPassword.activeInHierarchy)
         {
             if (timer > 1)
@@ -166,10 +167,10 @@ public class RegistrationManager : MonoBehaviour
         {
             timer -= Time.deltaTime;
             currentTimerText.text = "Request for a new one in <color=#D64F4F>" + timer.ToString("f0") + " Second</color>.";
-            /*if (loginOtpScreen.activeSelf || forgotPassword.transform.Find("OTPScreen").gameObject.activeSelf)
-                currentTimeText.text = "Request for a new one in <color=#D64F4F>" + timer.ToString("f0") + " Second</color>.";
+           if (loginScreenWithOTP.activeSelf )
+                currentTimerText.text = "Request for a new one in <color=#D64F4F>" + timer.ToString("f0") + " Second</color>.";
             else
-                currentTimeText.text = string.Format("{0:00}:{1:00}", 0, timer);*/
+                currentTimerText.text = string.Format("{0:00}:{1:00}", 0, timer);
         }
         else if (timer < 1 && currentTimerText != null)
         {
@@ -350,6 +351,10 @@ public class RegistrationManager : MonoBehaviour
                         //MainDashboardScreen.instance.ShowScreen(MainDashboardScreen.MainDashboardScreens.Loading);
                         WebServices.instance.SendRequest(RequestType.Login, requestData, true, OnServerResponseFound);
                     }
+                    currentTimerText = loginTimerText;
+                    timer = 20f;
+                    loginTimerText.text = "Request for a new one in<color=red>"+ forgetMobileNumber.text + "Second</color>" ;
+                 //   OnClickOnButton("openForgetPasswordOtp");
                 }
                 break;
 
@@ -357,6 +362,9 @@ public class RegistrationManager : MonoBehaviour
                 {
                     string error;
                     registrationType = "custom";
+                    if (timer > 0)
+                        return;
+
                     if (!Utility.IsValidUserMobile(loginWithOTPMobileNumber.text, out error))
                     {
                         Debug.Log(error);
@@ -397,7 +405,7 @@ public class RegistrationManager : MonoBehaviour
                             "\"mac_address\":\"" + ipAddress + "\"," +
                             "\"app_version\":\"" + "0.0.1" + "\"," +
                             "\"device_type\":\"" + deviceType + "\"}";
-
+                        Debug.Log("loginwithotp");
                         WebServices.instance.SendRequest(RequestType.VerifyOtp, requestData, true, OnServerResponseFound);
                     }
                 }
@@ -1054,30 +1062,33 @@ public class RegistrationManager : MonoBehaviour
         {
             Debug.Log("Response => VerifyOtp: " + serverResponse);
             JsonData data = JsonMapper.ToObject(serverResponse);
-
+            Debug.Log("Come part0");
             if (data["statusCode"].ToString() == "200")
             {
                 Debug.Log("Response => type: " + data["type"].ToString());
 
                 PlayerGameDetails playerData = Utility.ParsePlayerGameData(data);
                 PlayerManager.instance.SetPlayerGameData(playerData);
-                MainDashboardScreen.instance.UpdateUserDetails(data);
-
+             //   MainDashboardScreen.instance.UpdateUserDetails(data);
+                Debug.Log("Come part1");
                 if (data["type"].ToString() == "2")
                 {
                     MainDashboardScreen.instance.bottomMenu.SetActive(true);
                     MainDashboardScreen.instance.DestroyScreen(MainDashboardScreen.MainDashboardScreens.Registration);
                     MainDashboardScreen.instance.ShowMessage(data["message"].ToString());
+                    Debug.Log("Come part2");
                     //GlobalGameManager.token = (string) data["data"]["token"];
                 }
                 else
                 {
+                    Debug.Log("Come part3");
                     OnClickOnButton("openCreatePassword");
                 }
             }
             else
             {
                 MainDashboardScreen.instance.ShowMessage(data["message"].ToString());
+                Debug.Log("Come part4");
             }
         }
         else if (requestType == RequestType.ResendOtp)
@@ -1088,14 +1099,23 @@ public class RegistrationManager : MonoBehaviour
             if (data["statusCode"].ToString() == "200")
             {
                 timer = 20f;
-
+                Debug.Log("Come");
                 if (data["type"].ToString() == "1")
+                {
+                    Debug.Log("Come");
                     registertOtpCountText.text = "OTP send only <color=black>" + data["data"]["resendCount"].ToString() + " Times</color>";
+                    
+                }
                 else if (data["type"].ToString() == "3")
                     forgetOtpCountText.text = "OTP send only <color=black>" + data["data"]["resendCount"].ToString() + " Times</color>";
 
                 if (data["type"].ToString() == "2")
+                {
                     MainDashboardScreen.instance.ShowMessage(data["message"].ToString());
+                    Debug.Log("Come2");
+                    LoginOtpCountText.text = "OTP send only <color=black>" + data["data"]["resendCount"].ToString() + " Times</color>";
+                   
+                }
             }
             else
             {

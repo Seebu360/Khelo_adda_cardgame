@@ -1,4 +1,5 @@
 using LitJson;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,45 @@ public class P_EmojiUIScreenManager : MonoBehaviour
 
     public static P_EmojiUIScreenManager instance;
 
+    [Space(10)]
+
+    [SerializeField] Image profileimage;
+    [SerializeField] Image frame;
+    [SerializeField] Image ruppeIconOfBalance;
+
+    [Space(5)]
+
+    [SerializeField] Text userName;
+    [SerializeField] Text balanceTxt;
+    [SerializeField] Text locationTxt;
+    [SerializeField] Text deviceTxt;
+
+    [Space(5)]
+
+    [SerializeField] Text vpipTxt;
+    [SerializeField] Text pfrTxt;
+    [SerializeField] Text bet3Txt;
+    [SerializeField] Text foldto3Txt;
+
+    [Space(5)]
+
+    [SerializeField] Text cbetTxt;
+    [SerializeField] Text foldToCbetTxt;
+    [SerializeField] Text stealTxt;
+    [SerializeField] Text checkRaiseTxt;
+
+    [Space(5)]
+
+    [SerializeField] Text wtsTxt;
+    [SerializeField] Text wsdTxt;
+    [SerializeField] Slider wtsSlider;
+    [SerializeField] Slider wsdSlider;
+
+
+    [Space(10)]
+
+    public string userId = string.Empty;
+
     public GameObject[] containerAry;
 
     public int containerVal;
@@ -16,11 +56,13 @@ public class P_EmojiUIScreenManager : MonoBehaviour
     public GameObject hideOnDealerClick;
     public GameObject showOnDealerClick;
 
-    public Image profileimage, frame;
-    public Text userName, UserId, levletxt;
+    public Text UserId, levletxt;
 
     public GameObject addBtn;
     public GameObject dealerBtn;
+
+
+    P_PlayerData playerDataLocal;
 
 
     // Start is called before the first frame update
@@ -35,17 +77,17 @@ public class P_EmojiUIScreenManager : MonoBehaviour
     private void Start()
     {
         //ClearAll();
-        if (P_InGameUiManager.instance != null && P_InGameUiManager.instance.TempUserID != null && P_InGameUiManager.instance.TempUserID != "0")
-        {
-            GetUserDetails(P_InGameUiManager.instance.TempUserID);
-        }
+        //if (P_InGameUiManager.instance != null && P_InGameUiManager.instance.TempUserID != null && P_InGameUiManager.instance.TempUserID != "0")
+        //{
+        //    GetUserDetails(P_InGameUiManager.instance.TempUserID);
+        //}
     }
 
     private void ClearAll()
     {
-        levletxt.text = "Lvl. " + ">>";
+        //levletxt.text = "Lvl. " + ">>";
         userName.text = "";
-        UserId.text = "";
+        //UserId.text = "";
     }
 
     public void OnDealerBtnClick()
@@ -54,25 +96,66 @@ public class P_EmojiUIScreenManager : MonoBehaviour
         //    P_InGameUiManager.instance.ShowScreen(P_InGameScreens.DealerImageScreen);
     }
 
-    public void GetUserDetails(string playerid)
+    public void GetUserDetails(P_PlayerData playerData) // string playerid, string username, float balance
     {
+        Debug.Log("Emoji playerid: " + playerData.userId + ", " + playerData.userName + ", " + playerData.balance);
+        playerDataLocal = playerData;
+        StartCoroutine(WebServices.instance.GETRequestData(GameConstants.API_URL + "/poker/poker-profile/?user_id=" + playerData.userId, UserDetailsResponse));
         //StartCoroutine(WebServices.instance.GETRequestData(GameConstants.API_BASE_URL + "user/" + playerid, UserDetailsResponse));
     }
 
     void UserDetailsResponse(string serverResponse, bool isErrorMessage, string errorMessage)
     {
-        Debug.Log("Response => UserDetails: " + serverResponse);
+        Debug.Log("Response => poker profile: " + serverResponse);
         JsonData data = JsonMapper.ToObject(serverResponse);
 
-        if (bool.Parse(data["status"].ToString()))
+        if (data["statusCode"].ToString() == "200")  //(bool.Parse(data["status"].ToString()))
         {
-            userName.text = data["data"]["userName"].ToString();
-            UserId.text = "UserID:" + data["data"]["userId"].ToString();
+            userName.text = (data["data"]["name"]==null) ? ( (!string.IsNullOrEmpty(playerDataLocal.userName)) ? playerDataLocal.userName : "" ) : data["data"]["name"].ToString();
+            
+            balanceTxt.text = "";
+            if (!string.IsNullOrEmpty(playerDataLocal.balance.ToString()))
+            {
+                balanceTxt.text = playerDataLocal.balance.ToString();
+                ruppeIconOfBalance.gameObject.SetActive(true);
+            }
+            
+            deviceTxt.text = "Device: <color=yellow>" + data["data"]["device_type"].ToString() + "</color>";
+
+
+            float betPreflopCountFloat = UserDetailsFloatDataHelper(data["data"]["stats"]["bet_preflop_count"].ToString(), vpipTxt);
+            float preflopRaiseCountFloat = UserDetailsFloatDataHelper(data["data"]["stats"]["preflop_raise_count"].ToString(), pfrTxt);
+            float thirdBetPreflopCountFloat = UserDetailsFloatDataHelper(data["data"]["stats"]["third_bet_preflop_count"].ToString(), bet3Txt);
+            float foldOn3betPreflopCountInt = UserDetailsFloatDataHelper(data["data"]["stats"]["fold_on_3bet_preflop_count"].ToString(), foldto3Txt);
+
+            float continuationBetCountFloat = UserDetailsFloatDataHelper(data["data"]["stats"]["continuation_bet_count"].ToString(), cbetTxt);
+            float foldOnContinuationBetCountFloat = UserDetailsFloatDataHelper(data["data"]["stats"]["fold_on_continuation_bet_count"].ToString(), foldToCbetTxt);
+            float raiseAtLastPositionOnTableCountFloat = UserDetailsFloatDataHelper(data["data"]["stats"]["raise_at_last_position_on_table_count"].ToString(), stealTxt);
+            float checkRaiseFlopCountFloat = UserDetailsFloatDataHelper(data["data"]["stats"]["check_raise_flop_count"].ToString(), checkRaiseTxt);
+
+            float showdownCountAfterFlopFloat = UserDetailsFloatDataHelper(data["data"]["stats"]["showdown_count_after_flop"].ToString(), wtsTxt);
+            float wonAtShowdownCountFloat = UserDetailsFloatDataHelper(data["data"]["stats"]["won_at_showdown_count"].ToString(), wsdTxt);
+
+            wtsSlider.value = (showdownCountAfterFlopFloat / 100);
+            wsdSlider.value = (wonAtShowdownCountFloat / 100);
+
+
+
+            //UserId.text = "UserID:" + data["data"]["userId"].ToString();
         }
         else
         {
-            Debug.LogError(data["error"].ToString());
+            //Debug.LogError(data["error"].ToString());
+            Debug.LogError(data["message"].ToString());
         }
+    }
+
+    float UserDetailsFloatDataHelper(string data, Text txt)
+    {
+        float varRef = 0F;
+        if (float.TryParse(data, out varRef)) { }
+        txt.text = Math.Round(varRef, 2) + "%";
+        return varRef;
     }
 
     public void OnServerResponseFound(RequestType requestType, string serverResponse, bool isShowErrorMessage, string errorMessage)
@@ -96,9 +179,9 @@ public class P_EmojiUIScreenManager : MonoBehaviour
                 {
 
                     loadImages(data["getData"][i]["profileImage"].ToString(), data["getData"][i]["frameURL"].ToString());
-                    levletxt.text = "Lvl. " + data["getData"][i]["userLevel"].ToString() + ">>";
+                    //levletxt.text = "Lvl. " + data["getData"][i]["userLevel"].ToString() + ">>";
                     userName.text = data["getData"][i]["userName"].ToString();
-                    UserId.text = "UserID:" + data["getData"][i]["userId"].ToString();
+                    //UserId.text = "UserID:" + data["getData"][i]["userId"].ToString();
                 }
 
             }

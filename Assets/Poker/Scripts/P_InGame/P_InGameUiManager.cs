@@ -56,6 +56,17 @@ public class P_InGameUiManager : MonoBehaviour
     public bool isTopUp = false;
     public bool isCallFromMenu = false;
 
+    [Space(10)]
+
+    [SerializeField] Transform[] handRankArray;
+    [SerializeField] Transform[] handRankMeterIcons;
+    [SerializeField] Transform handRankHighlightFrame;
+
+    [Space(10)]
+    [SerializeField] GameObject reBuyPopUp;
+    [SerializeField] GameObject blindsUpPopUp;
+    [SerializeField] GameObject AddOnPopUp;
+
 
     void Awake()
     {
@@ -102,16 +113,19 @@ public class P_InGameUiManager : MonoBehaviour
                 P_HandHistory.instance.OnGetTableHandHistoryDetails(1);
                 break;
             case "real_time_result":
+                if (P_SocketController.instance.lobbySelectedGameType == "SIT N GO")
+                    ShowScreen(P_InGameScreens.RealTimeResultSitNGo);
+                else
                     ShowScreen(P_InGameScreens.RealTimeResult);
                 break;
             case "chat":
                 ShowScreen(P_InGameScreens.Chat);
                 break;
-            case "emoji_screen":
-                    //if (inGameManager.AmISpectator)
-                    //    return;
-                    ShowScreen(P_InGameScreens.EmojiScreen);
-                break;
+            //case "emoji_screen":  //now set into individual P_Players.cs
+            //        //if (inGameManager.AmISpectator)
+            //        //    return;
+            //        ShowScreen(P_InGameScreens.EmojiScreen);
+            //    break;
             case "hand_ranking_open":
                 //P_SocketController.instance.JoinSimilarButtonsDisable();
                 //P_SocketController.instance.joinSimilarTblBtnContainer.gameObject.SetActive(false);
@@ -215,6 +229,10 @@ public class P_InGameUiManager : MonoBehaviour
             case P_InGameScreens.Chat:
             case P_InGameScreens.EmojiScreen:
             case P_InGameScreens.Leaderboard:
+            case P_InGameScreens.SitNGoWinnerLooser:
+            case P_InGameScreens.Profile:
+            case P_InGameScreens.TourneyWaitingForTable:
+            case P_InGameScreens.TourneyThanksForPlaying:
                 return P_IGScreenLayer.LAYER3;
             //case P_InGameScreens.:
                 //return P_IGScreenLayer.LAYER4;
@@ -408,14 +426,6 @@ public class P_InGameUiManager : MonoBehaviour
                     }
                     break;
             }
-
-            //for (int i = 0; i < data["pots"].Count; i++)
-            //{
-            //    if (data["pots"][i] != null)
-            //    {
-                    
-            //    }
-            //}
         }
         string potAmount = data["roundBets"].ToString();
         if (!potAmountText.gameObject.activeSelf)
@@ -436,7 +446,7 @@ public class P_InGameUiManager : MonoBehaviour
     {
         GameObject[] activeBetAmount;
 
-        for (int i = 0; i < P_InGameManager.instance.playersScript.Length; i++)
+        for (int i = 0; i < P_InGameManager.instance.playersScript.Count; i++)
         {
             P_Players pl = P_InGameManager.instance.playersScript[i];
             // timer
@@ -449,12 +459,29 @@ public class P_InGameUiManager : MonoBehaviour
             {
                 StopCoroutine(diceTimerCo);
             }
-            if (pl.betAmount.activeSelf)
+        }
+    }
+
+    public void OnSitNGoWinLoss(string str)
+    {
+        JsonData data = JsonMapper.ToObject(str);
+
+        ShowScreen(P_InGameScreens.SitNGoWinnerLooser);
+
+        if ((bool) data["isWinner"] == true)
+        {
+            if (P_SitNGoWinnerLooser.instance != null)
             {
-                
+                P_SitNGoWinnerLooser.instance.SetWinner(data["amount"].ToString());
             }
         }
-        //HideAllPots();
+        else
+        {
+            if (P_SitNGoWinnerLooser.instance != null)
+            {
+                P_SitNGoWinnerLooser.instance.SetLooser(data["amount"].ToString());
+            }
+        }
     }
 
     #endregion
@@ -491,7 +518,7 @@ public class P_InGameUiManager : MonoBehaviour
         Image timerRing = null;   /* = timerImages[0]*/   //null
         Transform fx_holder = null;
 
-        for (int i = 0; i < P_InGameManager.instance.playersScript.Length; i++)
+        for (int i = 0; i < P_InGameManager.instance.playersScript.Count; i++)
         {
             P_Players pl = P_InGameManager.instance.playersScript[i];
             if (pl.GetPlayerData().userId == playerTurn.ToString())
@@ -578,7 +605,7 @@ public class P_InGameUiManager : MonoBehaviour
     {
         Image timerRing = null;
 
-        for (int i = 0; i < P_InGameManager.instance.playersScript.Length; i++)
+        for (int i = 0; i < P_InGameManager.instance.playersScript.Count; i++)
         {
             P_Players pl = P_InGameManager.instance.playersScript[i];
             if (pl.userName.text == turnTimerPlayerTurn)
@@ -614,7 +641,7 @@ public class P_InGameUiManager : MonoBehaviour
         {
             StopCoroutine(diceTimerCo);
 
-            for (int i = 0; i < P_InGameManager.instance.playersScript.Length; i++)
+            for (int i = 0; i < P_InGameManager.instance.playersScript.Count; i++)
             {
                 P_InGameManager.instance.playersScript[i].timerImage.fillAmount = 0f;
                 //inGameManager.instance.players[i].GetComponent<Players>().timerImage.gameObject.SetActive(false);
@@ -646,22 +673,13 @@ public class P_InGameUiManager : MonoBehaviour
 
     public void FoldLoginPlayers(string id)
     {
-        for (int i = 0; i < P_InGameManager.instance.playersScript.Length; i++)
+        for (int i = 0; i < P_InGameManager.instance.playersScript.Count; i++)
         {
             P_Players pl = P_InGameManager.instance.playersScript[i];
             if (pl.playerData.userId == id)
             {
                 pl.foldImage.SetActive(true);
-                //Debug.Log("foldImage TRUE FoldLoginPlayers");
 
-                //if (pl.playerData.twoCards[0].transform.parent.gameObject.activeSelf)
-                //{
-                //    pl.fold2CardsImage.SetActive(true);
-                //}
-                //else if (pl.playerData.fourCards[0].transform.parent.gameObject.activeSelf)
-                //{
-                //    pl.fold4CardsImage.SetActive(true);
-                //}
                 if (pl.playerData.sixCards[0].transform.parent.gameObject.activeSelf)
                 {
                     if (P_InGameManager.instance.holeCardCount == 2)
@@ -679,13 +697,13 @@ public class P_InGameUiManager : MonoBehaviour
 
     public void DealerIconAllFalse()
     {
-        for (int i = 0; i < P_InGameManager.instance.playersScript.Length; i++)
+        for (int i = 0; i < P_InGameManager.instance.playersScript.Count; i++)
             P_InGameManager.instance.playersScript[i].dealer.SetActive(false);
     }
 
     public void AllPlayerPosPlusOn()
     {
-        for (int i = 0; i < P_InGameManager.instance.allPlayerPos.Length; i++)
+        for (int i = 0; i < P_InGameManager.instance.allPlayerPos.Count; i++)
         {
             P_InGameManager.instance.allPlayerPos[i].GetChild(0).gameObject.SetActive(false);
             P_InGameManager.instance.allPlayerPos[i].GetChild(1).gameObject.SetActive(true);
@@ -699,7 +717,7 @@ public class P_InGameUiManager : MonoBehaviour
 
     public void AllPlayerPosPlusOff(bool isActive)
     {
-        for (int i = 0; i < P_InGameManager.instance.allPlayerPos.Length; i++)
+        for (int i = 0; i < P_InGameManager.instance.allPlayerPos.Count; i++)
         {
             P_InGameManager.instance.allPlayerPos[i].GetChild(0).gameObject.SetActive(isActive);
             P_InGameManager.instance.allPlayerPos[i].GetChild(1).gameObject.SetActive(!isActive);
@@ -715,7 +733,7 @@ public class P_InGameUiManager : MonoBehaviour
      */
     public void ResetPlayersUI()
     {
-        for (int i = 0; i < P_InGameManager.instance.playersScript.Length; i++)
+        for (int i = 0; i < P_InGameManager.instance.playersScript.Count; i++)
         {
             P_Players pl = P_InGameManager.instance.playersScript[i];
 
@@ -739,21 +757,12 @@ public class P_InGameUiManager : MonoBehaviour
                     pl.realTimeResult.color = new Color(255f, 255f, 255f, 255f);
                 });
             }
-
-            //pl.UpdateLastAction("");
-
-            //winner me bich me player join ho uska unhide ho raha tha isi liye comment kiya
-            //pl.playerData.isFold = false;
-
-            //if (pl.foldImage != null) pl.foldImage.SetActive(false);
-            //if (pl.fold2CardsImage != null) pl.fold2CardsImage.SetActive(false);
-            //if (pl.fold4CardsImage != null) pl.fold4CardsImage.SetActive(false);
         }
     }
 
     public void ResetPlayerAllData()
     {
-        for (int i = 0; i < P_InGameManager.instance.playersScript.Length; i++)
+        for (int i = 0; i < P_InGameManager.instance.playersScript.Count; i++)
         {
             P_Players pl = P_InGameManager.instance.playersScript[i];
 
@@ -765,7 +774,7 @@ public class P_InGameUiManager : MonoBehaviour
 
     public void ResetLastAction()
     {
-        for (int i = 0; i < P_InGameManager.instance.playersScript.Length; i++)
+        for (int i = 0; i < P_InGameManager.instance.playersScript.Count; i++)
         {
             P_InGameManager.instance.playersScript[i].UpdateLastAction("");
             P_InGameManager.instance.playersScript[i].betAmount.SetActive(false);
@@ -790,67 +799,13 @@ public class P_InGameUiManager : MonoBehaviour
 
     public void HideHoleCards()
     {
-        for (int i = 0; i < P_InGameManager.instance.playersScript.Length; i++)
+        for (int i = 0; i < P_InGameManager.instance.playersScript.Count; i++)
         {
             int tempi = i;
             P_Players pl = P_InGameManager.instance.playersScript[i];
-            //for (int j = 0; j < pl.playerData.twoCards.Length; j++)
-            //{
-            //    pl.playerData.twoCards[j].sprite = P_CardsManager.instance.cardBackSprite;
-            //}
-            //for (int j = 0; j < pl.playerData.fourCards.Length; j++)
-            //{
-            //    pl.playerData.fourCards[j].sprite = P_CardsManager.instance.cardBackSprite;
-            //}
-            //pl.playerData.fourCards[0].transform.parent.gameObject.SetActive(false);
-            //pl.playerData.twoCards[0].transform.parent.gameObject.SetActive(false);
-            //pl.playerData.sixCards[0].transform.parent.gameObject.SetActive(false);
-
-            //pl.playerData.twoCards[0].transform.parent.GetComponent<RectTransform>().localScale = new Vector3(1f, 1f, 1f);
-            //pl.playerData.twoCards[0].transform.parent.DOScale(new Vector3(1f, 1f, 1f), GameConstants.CARD_ANIMATION_DURATION).OnComplete(() =>
-            //{
-            //    pl.playerData.twoCards[0].transform.parent.gameObject.SetActive(false);
-            //    for (int j = 0; j < pl.playerData.twoCards.Length; j++)
-            //    {
-            //        pl.playerData.twoCards[j].sprite = P_CardsManager.instance.cardBackSprite;
-            //    }
-            //    for (int j = 0; j < pl.playerData.fourCards.Length; j++)
-            //    {
-            //        pl.playerData.fourCards[j].sprite = P_CardsManager.instance.cardBackSprite;
-            //    }
-            //});
 
             for (int j = 0; j < pl.playerData.sixCards.Length; j++)
             {
-                // two card
-                //int tempj = j;
-                //StartCoroutine(Fade(pl.playerData.twoCards[tempj], 0.5f, false));
-                ////pl.playerData.twoCards[tempj].DOKill();
-                ////pl.playerData.twoCards[tempj].DOFade(0f, 0.5f);
-
-                //StartCoroutine(P_MainSceneManager.instance.RunAfterDelay(0.5f, () => {
-                //    for (int k = 0; k < pl.playerData.twoCards.Length; k++)
-                //    {
-                //        pl.playerData.twoCards[k].color = new Color(255, 255, 255, 255);
-                //        if (pl.playerData.userId == PlayerManager.instance.GetPlayerGameData().userId)
-                //        {
-                //            pl.playerData.twoCards[k].transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-                //        }
-                //    }
-
-                //    for (int s = 0; s < pl.playerData.twoCards.Length; s++)
-                //    {
-                //        pl.playerData.twoCards[s].sprite = P_CardsManager.instance.cardBackSprite;
-                //    }
-                //    pl.playerData.twoCards[0].transform.parent.localScale = new Vector3(1f, 1f, 1f);
-                //    pl.playerData.twoCards[0].transform.parent.gameObject.SetActive(false);
-                //    if (tempi > 0)
-                //    {
-                //        pl.playerData.twoCards[0].transform.parent.GetComponent<RectTransform>().localPosition = new Vector3(30f, 5f, 0f);
-                //    }
-                //}));
-
-
                 // five card
                 int tempj = j;
                 StartCoroutine(Fade(pl.playerData.sixCards[tempj], 0.5f, false));
@@ -868,26 +823,6 @@ public class P_InGameUiManager : MonoBehaviour
                         }
                     }
                 }));
-
-                //pl.playerData.twoCards[tempj].DOFade(0f, 0.5f).OnComplete(() => //GameConstants.LOCAL_BET_ANIMATION_DURATION
-                //{
-                //    Debug.Log("DoColor 2");
-                //    for (int k = 0; k < pl.playerData.twoCards.Length; k++)
-                //    {
-                //        Debug.Log("DoColor 3");
-                //        pl.playerData.twoCards[k].color = new Color(255, 255, 255, 255);
-                //    }
-
-                //    for (int s = 0; s < pl.playerData.twoCards.Length; s++)
-                //    {
-                //        pl.playerData.twoCards[s].sprite = P_CardsManager.instance.cardBackSprite;
-                //    }
-                //    pl.playerData.twoCards[0].transform.parent.localScale = new Vector3(1f, 1f, 1f);
-
-                //    Debug.Log("DoColor false 0");
-                //    pl.playerData.twoCards[0].transform.parent.gameObject.SetActive(false);
-                //    Debug.Log("DoColor false 1");
-                //});
             }
             
 
@@ -959,7 +894,7 @@ public class P_InGameUiManager : MonoBehaviour
 
     public void HidefoldSprites()
     {
-        for (int i = 0; i < P_InGameManager.instance.playersScript.Length; i++)
+        for (int i = 0; i < P_InGameManager.instance.playersScript.Count; i++)
         {
             P_Players pl = P_InGameManager.instance.playersScript[i];
             
@@ -985,19 +920,12 @@ public class P_InGameUiManager : MonoBehaviour
                     });
                 }
             }
-            //if (pl.foldImage.activeInHierarchy)
-            //{
-            //    pl.foldImage.GetComponent<Image>().DOFade(0f, 0.5f).From().SetEase(Ease.OutQuad).OnComplete(() =>
-            //    {
-            //        pl.foldImage.SetActive(false);
-            //    });
-            //}
         }
     }
 
     public void HidePlayersOnNewGame()
     {
-        for (int i = 0; i < P_InGameManager.instance.playersScript.Length; i++)
+        for (int i = 0; i < P_InGameManager.instance.playersScript.Count; i++)
         {
             P_InGameManager.instance.playersScript[i].gameObject.SetActive(false);
         }
@@ -1009,6 +937,80 @@ public class P_InGameUiManager : MonoBehaviour
         {
             P_InGameManager.instance.allPots[i].SetActive(false);
         }
+    }
+
+
+
+
+    public void UpdateHandRankFrame(string handTypeData)
+    {
+        for (int i = 0; i < handRankMeterIcons.Length; i++)
+        {
+            handRankMeterIcons[i].gameObject.SetActive(false);
+        }
+        //Debug.Log("handTypeData: " + handTypeData);
+        int needToShow = 1;
+        switch (handTypeData)
+        {
+            case "Royal Flush":
+                handRankHighlightFrame.SetParent(handRankArray[0]);
+                needToShow = handRankArray.Length - 10;
+                break;
+            case "Straight Flush":
+                handRankHighlightFrame.SetParent(handRankArray[1]);
+                needToShow = handRankArray.Length - 9;
+                break;
+            case "Four of a Kind":
+                handRankHighlightFrame.SetParent(handRankArray[2]);
+                needToShow = handRankArray.Length - 8;
+                break;
+            case "Full House":
+                handRankHighlightFrame.SetParent(handRankArray[3]);
+                needToShow = handRankArray.Length - 7;
+                break;
+            case "Flush":
+                handRankHighlightFrame.SetParent(handRankArray[4]);
+                needToShow = handRankArray.Length - 6;
+                break;
+            case "Straight":
+                handRankHighlightFrame.SetParent(handRankArray[5]);
+                needToShow = handRankArray.Length - 5;
+                break;
+            case "Three of a Kind":
+                handRankHighlightFrame.SetParent(handRankArray[6]);
+                needToShow = handRankArray.Length - 4;
+                break;
+            case "Two Pair":
+                handRankHighlightFrame.SetParent(handRankArray[7]);
+                needToShow = handRankArray.Length - 3;
+                break;
+            case "Pair":
+                handRankHighlightFrame.SetParent(handRankArray[8]);
+                needToShow = handRankArray.Length - 2;
+                break;
+            case "High Card":
+                handRankHighlightFrame.SetParent(handRankArray[9]);
+                needToShow = handRankArray.Length - 1;
+                break;
+        }
+        handRankHighlightFrame.localPosition = Vector3.zero;
+        for (int i = handRankMeterIcons.Length - 1; i >= needToShow; i--)
+        {
+            handRankMeterIcons[i].gameObject.SetActive(true);
+        }
+        if (!handRankHighlightFrame.gameObject.activeSelf)
+            handRankHighlightFrame.gameObject.SetActive(true);
+    }
+
+
+
+    public void ResetHandMeterIcons()
+    {
+        for (int i = 0; i < handRankMeterIcons.Length; i++)
+        {
+            handRankMeterIcons[i].gameObject.SetActive(false);
+        }
+        handRankHighlightFrame.gameObject.SetActive(false);
     }
 
 
@@ -1050,10 +1052,15 @@ public enum P_InGameScreens
     TableSettings,
     SwitchTable,
     RealTimeResult,
+    RealTimeResultSitNGo,
     HandHistory,
     Chat,
     EmojiScreen,
     Leaderboard,
+    SitNGoWinnerLooser,
+    Profile,
+    TourneyWaitingForTable,
+    TourneyThanksForPlaying,
     //InGameShop,
     //HandRanking,
     //Missions,
@@ -1065,7 +1072,6 @@ public enum P_InGameScreens
     //TableList,
     //PrivateTableList,
     //CreatePrivateTable,
-    //Profile,
     //EditProfile,
     //MaineMenuScreen
 }

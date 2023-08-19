@@ -55,9 +55,9 @@ public class SoundManager : MonoBehaviour
 
     public void PlaySound(SoundType soundType)
     {
-        GameObject gm = Instantiate(soundPrefabs[(int)soundType],Vector3.zero,Quaternion.identity) as GameObject;
-        gm.GetComponent<AudioSource>().volume = volume;
-        Destroy(gm,/*soundLength[(int)soundType]*/10);
+        //GameObject gm = Instantiate(soundPrefabs[(int)soundType],Vector3.zero,Quaternion.identity) as GameObject;
+        //gm.GetComponent<AudioSource>().volume = volume;
+        //Destroy(gm,/*soundLength[(int)soundType]*/10);
     }
     public void SoundCheck()
     {
