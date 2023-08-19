@@ -854,7 +854,7 @@ MonoBehaviour:
   m_PixelsPerUnitMultiplier: 1
 --- !u!95 &2126022228
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -871,8 +871,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &18828814760338242
 GameObject:
   m_ObjectHideFlags: 0
@@ -2174,7 +2173,7 @@ MonoBehaviour:
   m_PixelsPerUnitMultiplier: 1
 --- !u!95 &7912594524404830137
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -2191,8 +2190,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &350137510408511674
 GameObject:
   m_ObjectHideFlags: 0
@@ -5428,7 +5426,7 @@ MonoBehaviour:
   m_PixelsPerUnitMultiplier: 1
 --- !u!95 &1176221171797315266
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -5445,8 +5443,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1176221171797311211
 GameObject:
   m_ObjectHideFlags: 0
@@ -6076,7 +6073,7 @@ MonoBehaviour:
   m_PixelsPerUnitMultiplier: 1
 --- !u!95 &1176221171797315249
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -6093,8 +6090,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1176221171797320953
 GameObject:
   m_ObjectHideFlags: 0
@@ -8163,7 +8159,7 @@ MonoBehaviour:
   m_PixelsPerUnitMultiplier: 1
 --- !u!95 &1435315211662987880
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -8180,8 +8176,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &5955626194616224218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9317,7 +9312,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -9494,6 +9489,8 @@ MonoBehaviour:
   suggestionPanelAnimator: {fileID: 7912594524404830137}
   holeCardsTemp: []
   isSeatRotation: 0
+  chatIconTopBottom: {fileID: 0}
+  chatIconLeftRight: {fileID: 0}
   myPlayerSeatIndex: 0
   mySeatIndex: 0
   mySeatIndexTemp: -1
@@ -9971,7 +9968,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 08f9a0e5a0ca6094ca6833fc3c93e39e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8cb060e6b0f745f4baa4c180541d70d8, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -10071,7 +10068,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 45}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -10198,7 +10195,7 @@ MonoBehaviour:
   m_PixelsPerUnitMultiplier: 1
 --- !u!95 &3916869957370468052
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -10215,8 +10212,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1764886512287702649
 GameObject:
   m_ObjectHideFlags: 0
@@ -13875,7 +13871,7 @@ MonoBehaviour:
   m_PixelsPerUnitMultiplier: 1
 --- !u!95 &6743886426280516731
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -13892,8 +13888,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2855859353970295267
 GameObject:
   m_ObjectHideFlags: 0
@@ -20249,7 +20244,7 @@ MonoBehaviour:
   m_PixelsPerUnitMultiplier: 1
 --- !u!95 &4497922194926379260
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -20266,8 +20261,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &4811909835362926267
 GameObject:
   m_ObjectHideFlags: 0
@@ -26202,6 +26196,86 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &6357454422428117859
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 718019157567785900}
+  - component: {fileID: 1570496189809246047}
+  - component: {fileID: 338773339205314079}
+  m_Layer: 5
+  m_Name: Text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &718019157567785900
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6357454422428117859}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6421741201591663828}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 5}
+  m_SizeDelta: {x: 102, y: 40}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &1570496189809246047
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6357454422428117859}
+  m_CullTransparentMesh: 1
+--- !u!114 &338773339205314079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6357454422428117859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 6e3702f132a597b40b1c1a1ee0361aca, type: 3}
+    m_FontSize: 16
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 1
+    m_MaxSize: 40
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: Hello sd fdf dfsdf jere jdss
 --- !u!1 &6363303738736856706
 GameObject:
   m_ObjectHideFlags: 0
@@ -27670,7 +27744,7 @@ MonoBehaviour:
   m_PixelsPerUnitMultiplier: 1
 --- !u!95 &6196556951734450141
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -27687,8 +27761,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &6808430063248214725
 GameObject:
   m_ObjectHideFlags: 0
@@ -30521,7 +30594,7 @@ MonoBehaviour:
   m_Text: New Text
 --- !u!95 &4182635936146687832
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -30538,8 +30611,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7978796574948626218
 GameObject:
   m_ObjectHideFlags: 0
@@ -30775,7 +30847,7 @@ MonoBehaviour:
   m_PixelsPerUnitMultiplier: 1
 --- !u!95 &5123206046485749061
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -30792,8 +30864,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &8020363349610359609
 GameObject:
   m_ObjectHideFlags: 0
@@ -30937,6 +31008,83 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 6ff7831baf1584c40bdbcb341bde116f, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!1 &8031127840608061858
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6421741201591663828}
+  - component: {fileID: 1514597522269604336}
+  - component: {fileID: 5872280121548733327}
+  m_Layer: 5
+  m_Name: Chat
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &6421741201591663828
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8031127840608061858}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 718019157567785900}
+  m_Father: {fileID: 9045240291767648178}
+  m_RootOrder: 22
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 111, y: 60}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &1514597522269604336
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8031127840608061858}
+  m_CullTransparentMesh: 1
+--- !u!114 &5872280121548733327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8031127840608061858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 9e344b35ab87ed84ab329c29c39257ff, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -31248,10 +31396,15 @@ MonoBehaviour:
   - {fileID: 3091432671981371271, guid: fa061480631d43443878cc8b2e2de418, type: 3}
   - {fileID: 2374332927855073667, guid: eda2ea76b77bc904cabea5736dc697de, type: 3}
   - {fileID: 2675475918296275356, guid: 0cb7b66c423f8984b9ed518c23171166, type: 3}
+  - {fileID: 2675475918296275356, guid: 0a0045f30a6d6474a95a89ff1462a22d, type: 3}
   - {fileID: 5883551790151081492, guid: 81a2cbbb16a65ab43bccd3c6a9deeb20, type: 3}
   - {fileID: 4654787027769472351, guid: 8ad021b047310044eb22fd25bd33f3b2, type: 3}
   - {fileID: 7669193933627609539, guid: b50774f0520de47459796d2dffcccaf3, type: 3}
   - {fileID: 2374332927855073667, guid: 6ff47255b5eae964794941fee2a21ca8, type: 3}
+  - {fileID: 2675475918296275356, guid: 8c5e8e657d4cda346b12abb8ae0668fd, type: 3}
+  - {fileID: 4636993073001909146, guid: 4fc32fd1367937145b24e9e9453cbba2, type: 3}
+  - {fileID: 2675475918296275356, guid: 9adce543193c33346ba07ae419e88d87, type: 3}
+  - {fileID: 2675475918296275356, guid: f06171d159fd5624f9ae989da2f159a1, type: 3}
   screenLayers:
   - {fileID: 5448319864987772175}
   - {fileID: 3977442667083570280}
@@ -31283,6 +31436,32 @@ MonoBehaviour:
   buyInErrorText: {fileID: 1079539088600066008}
   isTopUp: 0
   isCallFromMenu: 0
+  handRankArray:
+  - {fileID: 9045240291767645778}
+  - {fileID: 9045240291767618876}
+  - {fileID: 9045240291767645617}
+  - {fileID: 9045240291767644386}
+  - {fileID: 9045240291767647710}
+  - {fileID: 9045240291767644404}
+  - {fileID: 9045240291767647075}
+  - {fileID: 9045240291767646224}
+  - {fileID: 9045240291767645822}
+  - {fileID: 9045240291767619159}
+  handRankMeterIcons:
+  - {fileID: 4633214135007325623}
+  - {fileID: 6085018933696974286}
+  - {fileID: 4082875356307177573}
+  - {fileID: 5768146519613300365}
+  - {fileID: 379527652672900177}
+  - {fileID: 335654494564071868}
+  - {fileID: 3405573685994573926}
+  - {fileID: 1493028817665885847}
+  - {fileID: 4557842049585577325}
+  - {fileID: 8124832954477819808}
+  handRankHighlightFrame: {fileID: 0}
+  reBuyPopUp: {fileID: 0}
+  blindsUpPopUp: {fileID: 0}
+  AddOnPopUp: {fileID: 0}
 --- !u!1 &8131980406079796182
 GameObject:
   m_ObjectHideFlags: 0
@@ -32327,7 +32506,7 @@ MonoBehaviour:
   m_PixelsPerUnitMultiplier: 1
 --- !u!95 &261298134943899095
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -32344,8 +32523,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &8460898163504386000
 GameObject:
   m_ObjectHideFlags: 0
@@ -34542,11 +34720,6 @@ MonoBehaviour:
     twoCards:
     - {fileID: 9045240291767618074}
     - {fileID: 9045240291767618075}
-    fourCards:
-    - {fileID: 9045240291767618245}
-    - {fileID: 9045240291767618195}
-    - {fileID: 9045240291767618508}
-    - {fileID: 9045240291767618542}
     sixCards:
     - {fileID: 5973744848163403274}
     - {fileID: 2354800078182899022}
@@ -34571,6 +34744,7 @@ MonoBehaviour:
   currentSeat: 
   seatNo: 
   lastActionImage: {fileID: 9045240291767632045}
+  muckBG: {fileID: 0}
   lastActionText: {fileID: 9045240291767618477}
   EventSprite:
   - {fileID: 21300000, guid: b061a9bf4c0cf9f439cde48d52a6d968, type: 3}
@@ -34582,6 +34756,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 6260b6c1231f4cc47ac16da3bb7d7603, type: 3}
   - {fileID: 21300000, guid: c284d14be6f15a3499f7eaea62abbdd5, type: 3}
   isItMe: 0
+  chatObj: {fileID: 1395349936834657299}
 --- !u!1 &9045240291767631883
 GameObject:
   m_ObjectHideFlags: 0
@@ -35621,11 +35796,6 @@ MonoBehaviour:
     twoCards:
     - {fileID: 9045240291767618088}
     - {fileID: 9045240291767616608}
-    fourCards:
-    - {fileID: 9045240291767618095}
-    - {fileID: 9045240291767618326}
-    - {fileID: 9045240291767618221}
-    - {fileID: 9045240291767618251}
     sixCards:
     - {fileID: 8947179083216719624}
     - {fileID: 2079084648438200957}
@@ -35650,6 +35820,7 @@ MonoBehaviour:
   currentSeat: 
   seatNo: 
   lastActionImage: {fileID: 9045240291767631945}
+  muckBG: {fileID: 0}
   lastActionText: {fileID: 9045240291767618474}
   EventSprite:
   - {fileID: 21300000, guid: b061a9bf4c0cf9f439cde48d52a6d968, type: 3}
@@ -35661,6 +35832,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 6260b6c1231f4cc47ac16da3bb7d7603, type: 3}
   - {fileID: 21300000, guid: c284d14be6f15a3499f7eaea62abbdd5, type: 3}
   isItMe: 0
+  chatObj: {fileID: 8031127840608061858}
 --- !u!1 &9045240291767631896
 GameObject:
   m_ObjectHideFlags: 0
@@ -37925,11 +38097,6 @@ MonoBehaviour:
     twoCards:
     - {fileID: 9045240291767618559}
     - {fileID: 9045240291767618413}
-    fourCards:
-    - {fileID: 9045240291767616626}
-    - {fileID: 9045240291767618435}
-    - {fileID: 9045240291767618447}
-    - {fileID: 9045240291767616532}
     sixCards:
     - {fileID: 2408121045929866920}
     - {fileID: 8385529127704093278}
@@ -37954,6 +38121,7 @@ MonoBehaviour:
   currentSeat: 
   seatNo: 
   lastActionImage: {fileID: 9045240291767632254}
+  muckBG: {fileID: 0}
   lastActionText: {fileID: 9045240291767618362}
   EventSprite:
   - {fileID: 21300000, guid: b061a9bf4c0cf9f439cde48d52a6d968, type: 3}
@@ -37965,6 +38133,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 6260b6c1231f4cc47ac16da3bb7d7603, type: 3}
   - {fileID: 21300000, guid: c284d14be6f15a3499f7eaea62abbdd5, type: 3}
   isItMe: 0
+  chatObj: {fileID: 9045240291767633382}
 --- !u!1 &9045240291767631942
 GameObject:
   m_ObjectHideFlags: 0
@@ -38536,7 +38705,7 @@ MonoBehaviour:
   m_PixelsPerUnitMultiplier: 1
 --- !u!95 &9045240291767636391
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -38553,8 +38722,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &9045240291767631949
 GameObject:
   m_ObjectHideFlags: 0
@@ -41799,7 +41967,7 @@ MonoBehaviour:
   m_PixelsPerUnitMultiplier: 1
 --- !u!95 &9045240291767636409
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -41816,8 +41984,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &9045240291767631988
 GameObject:
   m_ObjectHideFlags: 0
@@ -42271,7 +42438,7 @@ MonoBehaviour:
   m_PixelsPerUnitMultiplier: 1
 --- !u!95 &9045240291767636414
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -42288,8 +42455,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &9045240291767631994
 GameObject:
   m_ObjectHideFlags: 0
@@ -42963,7 +43129,7 @@ MonoBehaviour:
   m_PixelsPerUnitMultiplier: 1
 --- !u!95 &9045240291767636390
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -42980,8 +43146,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &9045240291767632003
 GameObject:
   m_ObjectHideFlags: 0
@@ -47564,7 +47729,7 @@ MonoBehaviour:
   m_PixelsPerUnitMultiplier: 1
 --- !u!95 &9045240291767636413
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -47581,8 +47746,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &9045240291767632060
 GameObject:
   m_ObjectHideFlags: 0
@@ -47990,7 +48154,7 @@ MonoBehaviour:
   m_PixelsPerUnitMultiplier: 1
 --- !u!95 &9045240291767636388
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -48007,8 +48171,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &9045240291767632066
 GameObject:
   m_ObjectHideFlags: 0
@@ -48088,7 +48251,7 @@ MonoBehaviour:
   m_PixelsPerUnitMultiplier: 1
 --- !u!95 &9045240291767636398
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -48105,8 +48268,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &9045240291767632067
 GameObject:
   m_ObjectHideFlags: 0
@@ -48568,7 +48730,7 @@ MonoBehaviour:
   m_PixelsPerUnitMultiplier: 1
 --- !u!95 &9045240291767636386
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -48585,8 +48747,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &9045240291767632072
 GameObject:
   m_ObjectHideFlags: 0
@@ -51837,11 +51998,6 @@ MonoBehaviour:
     twoCards:
     - {fileID: 9045240291767618523}
     - {fileID: 9045240291767616568}
-    fourCards:
-    - {fileID: 9045240291767618194}
-    - {fileID: 9045240291767618337}
-    - {fileID: 9045240291767618370}
-    - {fileID: 9045240291767618143}
     sixCards:
     - {fileID: 4105960446535095294}
     - {fileID: 5719953155345777610}
@@ -51866,6 +52022,7 @@ MonoBehaviour:
   currentSeat: 
   seatNo: 
   lastActionImage: {fileID: 9045240291767631949}
+  muckBG: {fileID: 0}
   lastActionText: {fileID: 9045240291767618392}
   EventSprite:
   - {fileID: 21300000, guid: b061a9bf4c0cf9f439cde48d52a6d968, type: 3}
@@ -51877,6 +52034,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 6260b6c1231f4cc47ac16da3bb7d7603, type: 3}
   - {fileID: 21300000, guid: c284d14be6f15a3499f7eaea62abbdd5, type: 3}
   isItMe: 0
+  chatObj: {fileID: 9045240291767633287}
 --- !u!1 &9045240291767632110
 GameObject:
   m_ObjectHideFlags: 0
@@ -51961,11 +52119,6 @@ MonoBehaviour:
     twoCards:
     - {fileID: 9045240291767618248}
     - {fileID: 9045240291767618379}
-    fourCards:
-    - {fileID: 9045240291767618360}
-    - {fileID: 9045240291767618226}
-    - {fileID: 9045240291767618140}
-    - {fileID: 9045240291767618078}
     sixCards:
     - {fileID: 4948163080696471229}
     - {fileID: 8093588788306866625}
@@ -51990,6 +52143,7 @@ MonoBehaviour:
   currentSeat: 
   seatNo: 
   lastActionImage: {fileID: 9045240291767632248}
+  muckBG: {fileID: 0}
   lastActionText: {fileID: 9045240291767618486}
   EventSprite:
   - {fileID: 21300000, guid: b061a9bf4c0cf9f439cde48d52a6d968, type: 3}
@@ -52001,6 +52155,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 6260b6c1231f4cc47ac16da3bb7d7603, type: 3}
   - {fileID: 21300000, guid: c284d14be6f15a3499f7eaea62abbdd5, type: 3}
   isItMe: 0
+  chatObj: {fileID: 8369055689485681095}
 --- !u!1 &9045240291767632111
 GameObject:
   m_ObjectHideFlags: 0
@@ -52576,7 +52731,7 @@ MonoBehaviour:
   m_PixelsPerUnitMultiplier: 1
 --- !u!95 &9045240291767636411
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -52593,8 +52748,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &9045240291767632118
 GameObject:
   m_ObjectHideFlags: 0
@@ -52770,7 +52924,7 @@ MonoBehaviour:
   m_PixelsPerUnitMultiplier: 1
 --- !u!95 &9045240291767636385
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -52787,8 +52941,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &9045240291767632120
 GameObject:
   m_ObjectHideFlags: 0
@@ -54144,7 +54297,7 @@ MonoBehaviour:
   m_PixelsPerUnitMultiplier: 1
 --- !u!95 &9045240291767636410
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -54161,8 +54314,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &9045240291767632137
 GameObject:
   m_ObjectHideFlags: 0
@@ -54247,11 +54399,6 @@ MonoBehaviour:
     twoCards:
     - {fileID: 9045240291767618507}
     - {fileID: 9045240291767618263}
-    fourCards:
-    - {fileID: 9045240291767618242}
-    - {fileID: 9045240291767616526}
-    - {fileID: 9045240291767618193}
-    - {fileID: 9045240291767618449}
     sixCards:
     - {fileID: 8012533877238300486}
     - {fileID: 2679420664267703068}
@@ -54276,6 +54423,7 @@ MonoBehaviour:
   currentSeat: 
   seatNo: 
   lastActionImage: {fileID: 9045240291767632260}
+  muckBG: {fileID: 0}
   lastActionText: {fileID: 9045240291767618135}
   EventSprite:
   - {fileID: 21300000, guid: b061a9bf4c0cf9f439cde48d52a6d968, type: 3}
@@ -54287,6 +54435,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 6260b6c1231f4cc47ac16da3bb7d7603, type: 3}
   - {fileID: 21300000, guid: c284d14be6f15a3499f7eaea62abbdd5, type: 3}
   isItMe: 0
+  chatObj: {fileID: 9045240291767633289}
 --- !u!1 &9045240291767632138
 GameObject:
   m_ObjectHideFlags: 0
@@ -55735,7 +55884,7 @@ MonoBehaviour:
   m_PixelsPerUnitMultiplier: 1
 --- !u!95 &9045240291767636408
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -55752,8 +55901,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &9045240291767632155
 GameObject:
   m_ObjectHideFlags: 0
@@ -56951,7 +57099,7 @@ MonoBehaviour:
   m_PixelsPerUnitMultiplier: 1
 --- !u!95 &9045240291767636384
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -56968,8 +57116,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &9045240291767632170
 GameObject:
   m_ObjectHideFlags: 0
@@ -57293,7 +57440,7 @@ MonoBehaviour:
   m_PixelsPerUnitMultiplier: 1
 --- !u!95 &9045240291767636412
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -57310,8 +57457,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &9045240291767632174
 GameObject:
   m_ObjectHideFlags: 0
@@ -59219,7 +59365,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 9a151dc9d038aa643888584eaf4c85c3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f59c060018dc4db41a3a7dfacf12c35c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -59369,11 +59515,6 @@ MonoBehaviour:
     twoCards:
     - {fileID: 9045240291767618332}
     - {fileID: 9045240291767618306}
-    fourCards:
-    - {fileID: 9045240291767618420}
-    - {fileID: 9045240291767618423}
-    - {fileID: 9045240291767618315}
-    - {fileID: 9045240291767618314}
     sixCards:
     - {fileID: 8256948315388538661}
     - {fileID: 1283507617094074830}
@@ -59398,6 +59539,7 @@ MonoBehaviour:
   currentSeat: 
   seatNo: 
   lastActionImage: {fileID: 1176221171797307667}
+  muckBG: {fileID: 0}
   lastActionText: {fileID: 1176221171797260963}
   EventSprite:
   - {fileID: 21300000, guid: b061a9bf4c0cf9f439cde48d52a6d968, type: 3}
@@ -59409,6 +59551,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 6260b6c1231f4cc47ac16da3bb7d7603, type: 3}
   - {fileID: 21300000, guid: c284d14be6f15a3499f7eaea62abbdd5, type: 3}
   isItMe: 0
+  chatObj: {fileID: 1717819958470842349}
 --- !u!1 &9045240291767632199
 GameObject:
   m_ObjectHideFlags: 0
@@ -63316,7 +63459,7 @@ MonoBehaviour:
   m_PixelsPerUnitMultiplier: 1
 --- !u!95 &9045240291767636389
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -63333,8 +63476,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &9045240291767632243
 GameObject:
   m_ObjectHideFlags: 0
@@ -65786,11 +65928,6 @@ MonoBehaviour:
     twoCards:
     - {fileID: 9045240291767616545}
     - {fileID: 9045240291767618353}
-    fourCards:
-    - {fileID: 9045240291767618161}
-    - {fileID: 9045240291767618061}
-    - {fileID: 9045240291767618446}
-    - {fileID: 9045240291767618484}
     sixCards:
     - {fileID: 5235922188329960981}
     - {fileID: 2480116460924309860}
@@ -65815,6 +65952,7 @@ MonoBehaviour:
   currentSeat: 
   seatNo: 
   lastActionImage: {fileID: 9045240291767631971}
+  muckBG: {fileID: 0}
   lastActionText: {fileID: 9045240291767618136}
   EventSprite:
   - {fileID: 21300000, guid: b061a9bf4c0cf9f439cde48d52a6d968, type: 3}
@@ -65826,6 +65964,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 6260b6c1231f4cc47ac16da3bb7d7603, type: 3}
   - {fileID: 21300000, guid: c284d14be6f15a3499f7eaea62abbdd5, type: 3}
   isItMe: 0
+  chatObj: {fileID: 9045240291767633306}
 --- !u!1 &9045240291767632275
 GameObject:
   m_ObjectHideFlags: 0
@@ -66200,7 +66339,7 @@ MonoBehaviour:
   m_Text: New Text
 --- !u!95 &9045240291767636415
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -66217,8 +66356,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &9045240291767632280
 GameObject:
   m_ObjectHideFlags: 0
@@ -66632,6 +66770,7 @@ RectTransform:
   - {fileID: 7920864419991256022}
   - {fileID: 6710008494357243431}
   - {fileID: 2952220854868339329}
+  - {fileID: 6421741201591663828}
   m_Father: {fileID: 9045240291767648014}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -67708,7 +67847,7 @@ MonoBehaviour:
   m_PixelsPerUnitMultiplier: 1
 --- !u!95 &9045240291767636387
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -67725,8 +67864,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &9045240291767632298
 GameObject:
   m_ObjectHideFlags: 0
@@ -67811,11 +67949,6 @@ MonoBehaviour:
     twoCards:
     - {fileID: 9045240291767618463}
     - {fileID: 9045240291767618381}
-    fourCards:
-    - {fileID: 9045240291767618153}
-    - {fileID: 9045240291767616539}
-    - {fileID: 9045240291767618558}
-    - {fileID: 9045240291767618276}
     sixCards:
     - {fileID: 6624661901468220113}
     - {fileID: 1784128806747766254}
@@ -67840,6 +67973,7 @@ MonoBehaviour:
   currentSeat: 
   seatNo: 
   lastActionImage: {fileID: 9045240291767632144}
+  muckBG: {fileID: 0}
   lastActionText: {fileID: 9045240291767616521}
   EventSprite:
   - {fileID: 21300000, guid: b061a9bf4c0cf9f439cde48d52a6d968, type: 3}
@@ -67851,6 +67985,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 6260b6c1231f4cc47ac16da3bb7d7603, type: 3}
   - {fileID: 21300000, guid: c284d14be6f15a3499f7eaea62abbdd5, type: 3}
   isItMe: 0
+  chatObj: {fileID: 9045240291767633398}
 --- !u!1 &9045240291767632299
 GameObject:
   m_ObjectHideFlags: 0

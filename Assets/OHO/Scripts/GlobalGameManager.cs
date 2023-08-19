@@ -36,7 +36,7 @@ public class GlobalGameManager : MonoBehaviour
     public RoomData currentRoomData = new RoomData();
 
     public static bool IsJoiningPreviousGame = false;
-    public bool isTokenSent = false, creatingNewTable = false;
+    public bool isTokenSent = false, creatingNewTable = false, isKYCDone = false;
 
     //DEV_CODE
     public static int RunItMultiTimes = 0, currentTableInd;

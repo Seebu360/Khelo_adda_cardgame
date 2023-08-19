@@ -12072,6 +12072,8 @@ MonoBehaviour:
   registertOtpCountText: {fileID: 6685222184526439905}
   forgetTimerText: {fileID: 5322515470296923226}
   forgetOtpCountText: {fileID: 5322515470938726756}
+  loginTimerText: {fileID: 4825550210615682547}
+  LoginOtpCountText: {fileID: 4825550211228081140}
   mobilePassFields:
   - {fileID: 6685222185048709264}
   - {fileID: 6685222185183086901}

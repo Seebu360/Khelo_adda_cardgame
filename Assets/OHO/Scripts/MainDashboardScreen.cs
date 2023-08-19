@@ -35,14 +35,18 @@ public class MainDashboardScreen : MonoBehaviour
         EditProfile,
         PrivacyPolicy,
         TermsAndConditions,
-        GamePolicy
+        GamePolicy,
+        WithdrawCash,
+        R_Rules,
+        RummyDashboard,
+        RummyGameplay
     }
 
     public static MainDashboardScreen instance;
     public GameObject[] screens; // All screens prefab
     public Transform[] screenLayers; // screen spawn parent
     private List<MainDashboardActiveScreen> mainDashboardActiveScreens = new List<MainDashboardActiveScreen>();
-    public Text userNameText, drawerUsernameText;
+    public Text userNameText, drawerUsernameText, balanceText;
     public Image profilePic, frameImage;
     public GameObject[] activeBottomIcons;
     public GameObject[] deactiveBottomIcons;
@@ -57,7 +61,6 @@ public class MainDashboardScreen : MonoBehaviour
 
     public GameObject UniWebViewObject;
     //public UniWebView UniWebView;
-    private bool register, logIn;
 
     void Awake()
     {
@@ -73,25 +76,23 @@ public class MainDashboardScreen : MonoBehaviour
     void Start()
     {
         Debug.Log("Saved " + PlayerManager.instance.IsLogedIn());
-      
         if (PlayerManager.instance.IsLogedIn())
         {
             //GlobalGameManager.instance.LoadScene(Scenes.MainDashboard);
             GlobalGameManager.token = PrefsManager.GetPlayerData().token;
             GetUserDetails();
             bottomMenu.SetActive(true);
-            logIn = true; //NL
-            ShowScreen(MainDashboardScreens.Loading); //NL
-            Invoke(nameof(GameStart), .4f); //NL
+
+            if (PlayerPrefs.GetString("ShowWalletScreen") == "Yes")
+            {
+                PlayerPrefs.DeleteKey("ShowWalletScreen");
+                MenuSelection(1);
+            }
         }
         else
         {
             bottomMenu.SetActive(false);
-            register = true; // NL
-            ShowScreen(MainDashboardScreens.Loading);  //NL
-            Invoke(nameof(GameStart), .4f);  //NL
-
-        // OL //     ShowScreen(MainDashboardScreens.Registration);
+            ShowScreen(MainDashboardScreens.Registration);
         }
 
         /*UniWebView.OnMessageReceived += (view, message) => {
@@ -103,21 +104,6 @@ public class MainDashboardScreen : MonoBehaviour
                 //UniWebView = null;
             }
         };*/
-    }
-    public void GameStart()
-    {
-        if (logIn)
-        {
-            DestroyScreen(MainDashboardScreens.Loading);
-            logIn = false;
-        }
-
-        if (register)
-        {
-            DestroyScreen(MainDashboardScreens.Loading);
-            ShowScreen(MainDashboardScreens.Registration);
-            register = false;
-        }
     }
 
     public void GetUserDetails()
@@ -190,8 +176,22 @@ public class MainDashboardScreen : MonoBehaviour
 
     public void UpdateUserDetails(JsonData data)
     {
+        GlobalGameManager.instance.isKYCDone = bool.Parse(data["data"]["is_kyc_done"].ToString());
         PlayerGameDetails playerData = PlayerManager.instance.GetPlayerGameData();
         playerData.userName = userNameText.text = drawerUsernameText.text = data["data"]["username"].ToString();
+        int bonusAmount = 0;
+        int userWallet = 0;
+        if (data["data"]["user_wallet"]["bonus_amount"] != null)
+            bonusAmount = int.Parse(data["data"]["user_wallet"]["bonus_amount"].ToString().Split('.')[0]);
+
+        if (data["data"]["user_wallet"]["win_amount"] != null)
+            userWallet = int.Parse(data["data"]["user_wallet"]["win_amount"].ToString().Split('.')[0]);
+
+        int totalBalance = int.Parse(data["data"]["user_wallet"]["real_amount"].ToString().Split('.')[0]);
+        totalBalance += bonusAmount;
+        totalBalance += userWallet;
+        Debug.Log(totalBalance);
+        balanceText.text = totalBalance.ToString(); //data["data"]["user_wallet"]["real_amount"].ToString();
 
         /*for (int i = 0; i < data["getData"].Count; i++)
         {
@@ -514,7 +514,7 @@ public class MainDashboardScreen : MonoBehaviour
                 break;
             case "Withdraw":
                 {
-                    WalletScreen.instance.WithdrawUserCash();
+                    ShowScreen(MainDashboardScreens.WithdrawCash);
                 }
                 break;
             case "UserProfile":

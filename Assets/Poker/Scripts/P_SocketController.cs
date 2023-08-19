@@ -5,15 +5,8 @@ using BestHTTP.SocketIO3;
 using System.Collections;
 using BestHTTP.JSON;
 using LitJson;
-//using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using BestHTTP.SocketIO3.Events;
-//using TMPro;
-//using DG.Tweening;
-//using System.Linq;
-
-
-
 
 
 public class P_SocketController : MonoBehaviour
@@ -33,10 +26,10 @@ public class P_SocketController : MonoBehaviour
     public string gameId;
     public string gamePlayerId; // user id
     public string gamePlayerName; // user name
-    public string gamePlayerToken;
-    public string myColor;
-    public int swapIndex;
-    int isGameObjectFirstTime = 0;
+    //public string gamePlayerToken;
+    //public string myColor;
+    //public int swapIndex;
+    //int isGameObjectFirstTime = 0;
     public JsonData tableData;
     public string smallBlindTableData = "0", bigBlindTableData = "0", minimumBuyinTableData = "0";
     public JsonData gameTableData;
@@ -47,33 +40,29 @@ public class P_SocketController : MonoBehaviour
     public string lobbySelectedGameType = string.Empty;
 
 
-    public int playerTurnIndex = 0, lastPlayerTurnIndex = -1, oneTokenOpenPos, totalPlayersInGame = 0, myPlayerIndex = -1;
+    //public int playerTurnIndex = 0, lastPlayerTurnIndex = -1, oneTokenOpenPos, totalPlayersInGame = 0, myPlayerIndex = -1;
 
 
+    //[HideInInspector]
+    //public string winnerName;
 
-
-
-
-    [HideInInspector]
-    public string winnerName;
-
-    float timeRemaining, userServerTimer;
+    float timeRemaining; //, userServerTimer;
     bool isStartTime = false;
-    [HideInInspector]
-    public bool needToFetchLobby = false;
+    //[HideInInspector]
+    //public bool needToFetchLobby = false;
     int turnValue = 0;
 
-    public JsonData ReturnToStartPoint = null;
-    [HideInInspector]
+    //public JsonData ReturnToStartPoint = null;
+    //[HideInInspector]
 
 
-    Coroutine applicationQuitCo;
+    //Coroutine applicationQuitCo;
 
-    GameObject go;
+    //GameObject go;
 
     bool isClose = false;
 
-    public string[] communityCardsRank, communityCardsSuit;
+    //public string[] communityCardsRank, communityCardsSuit;
     public string idleTimeout;
     public string turnTimerStr;
     public string currentTurnUserId;
@@ -84,13 +73,14 @@ public class P_SocketController : MonoBehaviour
     public bool isJoinSended = false;
     public bool isTopUpSended = false;
     public bool isGameCounterStart = true;
-    public bool isTopUpSend = false;
+    //public bool isTopUpSend = false;
     public bool isCheckForInternet = false;
+    public bool isLeaveSeatSended;
+    //bool isSNGGameStartReceived = false;
 
     void Awake()
     {
         instance = this;
-        //if (Application.isEditor)
         Application.runInBackground = true;
         SetSocketState(P_SocketState.NULL);
         turnValue = 0;
@@ -167,7 +157,6 @@ public class P_SocketController : MonoBehaviour
     {
         //    SendLeaveMatchRequest();
         //Debug.Log("socket controller OnDestroy");
-
     }
 
     bool isPaused = false;
@@ -268,13 +257,10 @@ public class P_SocketController : MonoBehaviour
         if (P_GameConstant.enableLog)
             Debug.Log(socketManager.Uri);
 
-        //socketManager.Open();
-
         socketManager.Socket.On<ConnectResponse>(SocketIOEventTypes.Connect, OnServerConnect);
         socketManager.Socket.On<ConnectResponse>(SocketIOEventTypes.Disconnect, OnServerDisconnect);
         socketManager.Socket.On<SocketCustomError>(SocketIOEventTypes.Error, OnSocketError);
         //socketManager.Socket.On(SocketIOEventTypes.Error, OnError);
-        //socketManager.Socket.On<string>("chat message", OnChatMessage);
 
         ////Default Events
         //socketManager.Socket.On("reconnect", OnReconnect);
@@ -304,6 +290,9 @@ public class P_SocketController : MonoBehaviour
         socketManager.Socket.On<string>("GET_TABLES_BY_GAME_ID_RES", OnGetTableByGameIdRes);
         socketManager.Socket.On<string>("CHAT_RES", OnChatReceived);
         socketManager.Socket.On<string>("GET_CHAT_RES", OnGetChatReceived);
+        socketManager.Socket.On<string>("SNG_GAME_STARTED", OnSNGGameStartReceived);
+        socketManager.Socket.On<string>("SNG_WIN_LOSS", OnSNGWinLossReceived);
+        socketManager.Socket.On<string>("GAME_RESULT_RES", OnGameResultResReceived);
 
         socketManager.Open();
     }
@@ -322,16 +311,10 @@ public class P_SocketController : MonoBehaviour
             {
                 case P_SocketEvetns.CONNECT:
                     {
-                        //SendPlayerDetails();
-
                         switch (GetSocketState())
                         {
                             case P_SocketState.Connecting:
-                                //SetSocketState(P_SocketState.WaitingForOpponent);
-                                //Debug.Log(responseObject.eventType + "<color=yellow> IsJoiningPreviousGame " + P_GlobalGameManager.IsJoiningPreviousGame + "</color>");
-                                //CreateRoom();
                                 SetSocketState(P_SocketState.Connected);
-                                //SendJoin(LoginScreen.instance.tableIdtext.text, LoginScreen.instance.userNametext.text, LoginScreen.instance.chipsToPlaytext.text);
                                 break;
 
                             case P_SocketState.ReConnecting:
@@ -446,24 +429,13 @@ public class P_SocketController : MonoBehaviour
         SocketClose();
     }
 
-    //private void OnGameTimeLeft(Socket socket, object[] args)
-    //{
-    //    string responseText = JsonMapper.ToJson(args);
-    //    //Debug.Log("Socket => <color=yellow>GAME_TIME_LEFT</color>: " + responseText);
-    //    //if (Panel_Controller.instance != null)
-    //    {
-    //        string trimedStr = responseText.Remove(0, 2); //["10:00"]   10:00"]
-    //        trimedStr = trimedStr.Remove((trimedStr.Length - 2), 2); //10:00"]   10:00
-    //        //Panel_Controller.instance.gameTimerText.text = trimedStr;
-    //    }
-    //}
-
     private void OnGameCounter(string str)
     {
-        //if (P_GameConstant.enableLog)
-        //    Debug.Log("<color=yellow>GAME_COUNTER</color>: " + gameConter);
+        if (P_GameConstant.enableLog)
+            Debug.Log("<color=yellow>GAME_COUNTER</color>: " + str);
 
-        P_InGameUiManager.instance.OnGameCounterSet(str);
+        if (P_InGameUiManager.instance != null)
+            P_InGameUiManager.instance.OnGameCounterSet(str);
     }
 
     private void OnDealer(string str)
@@ -471,7 +443,8 @@ public class P_SocketController : MonoBehaviour
         if (P_GameConstant.enableLog)
             Debug.Log("<color=yellow>DEALER</color>: " + str);
         
-        P_InGameManager.instance.DealerIconSetTrue(str);
+        if (P_InGameManager.instance != null)
+            P_InGameManager.instance.DealerIconSetTrue(str);
     }
 
     private void OnSeatReceive(string str)
@@ -479,7 +452,8 @@ public class P_SocketController : MonoBehaviour
         if (P_GameConstant.enableLog)
             Debug.Log("<color=yellow>SEAT</color>: " + str);
 
-        P_InGameManager.instance.OnSeatReceiveSet(str);
+        if (P_InGameManager.instance != null)
+            P_InGameManager.instance.OnSeatReceiveSet(str);
     }
 
     private void OnUserStack(string str)
@@ -487,7 +461,8 @@ public class P_SocketController : MonoBehaviour
         if (P_GameConstant.enableLog)
             Debug.Log("<color=yellow>USER_STACK</color>: " + str);
 
-        P_InGameManager.instance.OnUserStackSet(str);
+        if (P_InGameManager.instance != null)
+            P_InGameManager.instance.OnUserStackSet(str);
     }
 
     private void OnHoleCard(string str)
@@ -495,7 +470,8 @@ public class P_SocketController : MonoBehaviour
         if (P_GameConstant.enableLog)
             Debug.Log("<color=yellow>HOLE_CARD</color>: " + str);
 
-        P_InGameManager.instance.OnHoleCardSet(str);
+        if (P_InGameManager.instance != null)
+            P_InGameManager.instance.OnHoleCardSet(str);
     }
 
     private void OnTurnChanged(string str)
@@ -503,7 +479,8 @@ public class P_SocketController : MonoBehaviour
         if (P_GameConstant.enableLog)
             Debug.Log("<color=yellow>TURN_CHANGED</color>: " + str);
 
-        P_InGameManager.instance.OnTurnChangedSet(str);
+        if (P_InGameManager.instance != null)
+            P_InGameManager.instance.OnTurnChangedSet(str);
     }
 
     private void OnActions(string str)
@@ -511,7 +488,8 @@ public class P_SocketController : MonoBehaviour
         if (P_GameConstant.enableLog)
             Debug.Log("<color=yellow>ACTIONS</color>: " + str);
 
-        P_InGameManager.instance.OnActionsSet(str);
+        if (P_InGameManager.instance != null)
+            P_InGameManager.instance.OnActionsSet(str);
     }
 
     private void OnTurnTimer(string turnTime)
@@ -533,7 +511,8 @@ public class P_SocketController : MonoBehaviour
         if (P_GameConstant.enableLog)
             Debug.Log("<color=yellow>POT</color>: " + str);
 
-        P_InGameUiManager.instance.OnPotSet(str);
+        if (P_InGameUiManager.instance != null)
+            P_InGameUiManager.instance.OnPotSet(str);
     }
 
     private void OnBet(string str)
@@ -561,7 +540,8 @@ public class P_SocketController : MonoBehaviour
         if (P_GameConstant.enableLog)
             Debug.Log("<color=yellow>COMMUNITY_CARD</color>: " + str);
 
-        P_InGameManager.instance.OnCommunityCardSet(str);
+        if (P_InGameManager.instance != null)
+            P_InGameManager.instance.OnCommunityCardSet(str);
     }
 
     private void OnWinner(string str)
@@ -569,7 +549,8 @@ public class P_SocketController : MonoBehaviour
         if (P_GameConstant.enableLog)
             Debug.Log("<color=yellow>WINNER</color>: " + str);
 
-        P_InGameManager.instance.OnWinnerSet(str);
+        if (P_InGameManager.instance != null)
+            P_InGameManager.instance.OnWinnerSet(str);
     }
 
     private void OnError(string str)
@@ -577,7 +558,10 @@ public class P_SocketController : MonoBehaviour
         if (P_GameConstant.enableLog)
             Debug.Log("<color=red>ERROR_EVENT</color>:" + str);
 
-        P_InGameManager.instance.OnErrorSet(str);
+        if (P_SitNGoDetails.instance != null)
+            P_SitNGoDetails.instance.OnErrorSet(str);
+        else if (P_InGameManager.instance != null)
+            P_InGameManager.instance.OnErrorSet(str);
     }
     
     private void OnBestHand(string str)
@@ -585,7 +569,8 @@ public class P_SocketController : MonoBehaviour
         if (P_GameConstant.enableLog)
             Debug.Log("<color=yellow>BEST_HAND</color>:" + str);
 
-        P_InGameManager.instance.BestHandText(str);
+        if (P_InGameManager.instance != null)
+            P_InGameManager.instance.BestHandText(str);
     }
     
     private void OnActionByUser(string str)
@@ -593,7 +578,8 @@ public class P_SocketController : MonoBehaviour
         if (P_GameConstant.enableLog)
             Debug.Log("<color=yellow>ACTION_BY_USER</color>:" + str);
 
-        P_InGameManager.instance.OnActionByUserSet(str);
+        if (P_InGameManager.instance != null)
+            P_InGameManager.instance.OnActionByUserSet(str);
     }
 
     private void OnSuggestedAction(string str)
@@ -601,7 +587,8 @@ public class P_SocketController : MonoBehaviour
         if (P_GameConstant.enableLog)
             Debug.Log("<color=yellow>SUGGESTED_ACTION</color>:" + str);
 
-        P_InGameManager.instance.OnSuggestionActionSet(str);
+        if (P_InGameManager.instance != null)
+            P_InGameManager.instance.OnSuggestionActionSet(str);
     }
 
     private void OnRoundChange(string str)
@@ -609,16 +596,23 @@ public class P_SocketController : MonoBehaviour
         if (P_GameConstant.enableLog)
             Debug.Log("<color=yellow>ROUND_CHANGE</color>:" + str);
 
-        P_InGameUiManager.instance.OnRoundChangeSet(str);
+        if (P_InGameUiManager.instance != null)
+            P_InGameUiManager.instance.OnRoundChangeSet(str);
     }
 
     private void OnGetGamesResp(string str)
     {
         if (P_GameConstant.enableLog)
-            Debug.Log("<color=yellow>OnGetGamesResp</color>: " + str);
+            Debug.Log("<color=yellow>GET_GAMES_RES</color>: " + str);
 
-        if (P_LobbySceneManager.instance != null)
+        if (P_SitNGoDetails.instance != null)
+        {
+            P_SitNGoDetails.instance.NewGetRoomsData(str);
+        }
+        else if (P_LobbySceneManager.instance != null)
+        {
             P_Lobby.instance.CreateLobby1Data(str);
+        }
     }
     
     private void OnGetTableByGameIdRes(string str)
@@ -628,45 +622,119 @@ public class P_SocketController : MonoBehaviour
 
         if (P_Lobby_Second.instance != null)
             P_Lobby_Second.instance.CreateSecondLobby(str);
+        if (P_SitNGoDetails.instance != null)
+            P_SitNGoDetails.instance.OnSitNGoTableData(str);
     }
     
     private void OnChatReceived(string str)
     {
         if (P_GameConstant.enableLog)
-            Debug.Log("<color=yellow>OnChatReceived</color>: " + str);
+            Debug.Log("<color=yellow>CHAT_RES</color>: " + str);
 
-        P_ChatManager.instance.OnChatMessageReceived(str);
+        if (P_ChatManager.instance != null)
+            P_ChatManager.instance.OnChatMessageReceived(str);
+        if (P_InGameManager.instance != null)
+            P_InGameManager.instance.ShowChatOnPlayer(str);
     }
     
     private void OnGetChatReceived(string str)
     {
         if (P_GameConstant.enableLog)
-            Debug.Log("<color=yellow>OnGetChatReceived</color>: " + str);
+            Debug.Log("<color=yellow>GET_CHAT_RES</color>: " + str);
 
-        P_ChatManager.instance.OnChatMessageReceived(str);
+        if (P_ChatManager.instance != null)
+            P_ChatManager.instance.OnChatMessageReceived(str);
     }
 
-    //IEnumerator ShowWinLoseScreen(JsonData data)
-    //{
-    //    yield return new WaitForSeconds(2f);
-    //    MainMenuController.instance.ShowScreen(MainMenuScreens.Winner);
-    //    if (data[0].ToString() == myPlayerIndex.ToString())
-    //    {
-    //        // self winner
-    //        if (WinnerLooser.instance != null)
-    //        {
-    //            WinnerLooser.instance.SelfWinner(true); //gameAmount
-    //        }
-    //    }
-    //    else
-    //    {
-    //        // self lose
-    //        if (WinnerLooser.instance != null)
-    //        {
-    //            WinnerLooser.instance.SelfWinner(false); //gameAmount
-    //        }
-    //    }
-    //}
+    private void OnSNGGameStartReceived(string str)
+    {
+        if (P_GameConstant.enableLog)
+            Debug.Log("<color=yellow>SNG_GAME_STARTED</color>: " + str);
+
+        //{"tableId":3131,"isGameStarted":true}
+
+
+        JsonData data = JsonMapper.ToObject(str);
+        TABLE_ID = data["tableId"].ToString();
+        lobbySelectedGameType = "SIT N GO";
+
+        if (!P_MainSceneManager.instance.IsInGameSceneActive())
+        {
+            P_MainSceneManager.instance.ScreenDestroy();
+            P_MainSceneManager.instance.LoadScene(P_MainScenes.InGame);
+        }
+
+        //SendGetRooms();
+        //P_SocketController.instance.gameId = roomData["game_id"].ToString();
+        //P_SocketController.instance.tableData = roomData;
+
+
+        //Debug.Log("gameTableMaxPlayers: " + gameTableMaxPlayers);
+        // remaining: seat hide according to lobby maxPlayers
+        if (gameTableMaxPlayers == 6)
+        {
+            for (int i = 0; i < P_InGameManager.instance.allPlayerPos.Count; i++)
+            {
+                if (P_InGameManager.instance.allPlayerPos[i].gameObject.name == "2" || P_InGameManager.instance.allPlayerPos[i].gameObject.name == "6")
+                    P_InGameManager.instance.allPlayerPos[i].gameObject.SetActive(false);
+            }
+        }
+        else if (gameTableMaxPlayers == 4)
+        {
+            for (int i = 0; i < P_InGameManager.instance.allPlayerPos.Count; i++)
+            {
+                if (P_InGameManager.instance.allPlayerPos[i].gameObject.name == "1" || P_InGameManager.instance.allPlayerPos[i].gameObject.name == "7" ||
+                    P_InGameManager.instance.allPlayerPos[i].gameObject.name == "3" || P_InGameManager.instance.allPlayerPos[i].gameObject.name == "5")
+                    P_InGameManager.instance.allPlayerPos[i].gameObject.SetActive(false);
+            }
+        }
+        else if (gameTableMaxPlayers == 2)
+        {
+            for (int i = 0; i < P_InGameManager.instance.allPlayerPos.Count; i++)
+            {
+                if (P_InGameManager.instance.allPlayerPos[i].gameObject.name == "1" || P_InGameManager.instance.allPlayerPos[i].gameObject.name == "2" ||
+                    P_InGameManager.instance.allPlayerPos[i].gameObject.name == "3" || P_InGameManager.instance.allPlayerPos[i].gameObject.name == "5" ||
+                    P_InGameManager.instance.allPlayerPos[i].gameObject.name == "6" || P_InGameManager.instance.allPlayerPos[i].gameObject.name == "7")
+                    P_InGameManager.instance.allPlayerPos[i].gameObject.SetActive(false);
+            }
+        }
+
+        int counterPos = 1;
+        for (int i = P_InGameManager.instance.allPlayerPos.Count - 1; i >= 0; i--)
+        {
+            if (P_InGameManager.instance.allPlayerPos[i].gameObject.activeSelf)
+            {
+                P_InGameManager.instance.allPlayerPos[i].transform.GetChild(0).GetComponent<P_PlayerSeat>().seatNo = counterPos.ToString();
+                counterPos++;
+            }
+            else
+            {
+                Destroy(P_InGameManager.instance.allPlayerPos[i].gameObject);
+                Destroy(P_InGameManager.instance.playersScript[i].gameObject);
+                P_InGameManager.instance.allPlayerPos.Remove(P_InGameManager.instance.allPlayerPos[i]);
+                P_InGameManager.instance.playersScript.Remove(P_InGameManager.instance.playersScript[i]);
+                P_InGameManager.instance.players.Remove(P_InGameManager.instance.players[i]);
+            }
+        }
+    }
+
+    private void OnSNGWinLossReceived(string str)
+    {
+        if (P_GameConstant.enableLog)
+            Debug.Log("<color=yellow>SNG_WIN_LOSS</color>: " + str);
+
+        if (P_InGameUiManager.instance != null)
+            P_InGameUiManager.instance.OnSitNGoWinLoss(str);
+    }
+
+    private void OnGameResultResReceived(string str)
+    {
+        if (P_GameConstant.enableLog)
+            Debug.Log("<color=yellow>GAME_RESULT_RES</color>: " + str);
+
+        if (P_RealTimeResultSitNGo.instance != null)
+            P_RealTimeResultSitNGo.instance.OnGameResultRes(str);
+    }
 
     void OnSocketError(SocketCustomError args)
     {
@@ -784,9 +852,12 @@ public class P_SocketController : MonoBehaviour
         isViewer = false;
         isJoinSended = true;
 
-        P_InGameManager.instance.handHistoryBtn.interactable = true;
-        P_InGameManager.instance.chatBtn.interactable = true;
-        P_InGameManager.instance.realTimeResultBtn.interactable = true;
+        if (P_InGameManager.instance != null)
+        {
+            //P_InGameManager.instance.handHistoryBtn.interactable = true;
+            P_InGameManager.instance.chatBtn.interactable = true;
+            P_InGameManager.instance.realTimeResultBtn.interactable = true;
+        }
     }
 
     public void SendJoinViewer()
@@ -808,9 +879,12 @@ public class P_SocketController : MonoBehaviour
         isJoinSended = false;
         isMyBalanceZero = false;
 
-        P_InGameManager.instance.handHistoryBtn.interactable = false;
-        P_InGameManager.instance.chatBtn.interactable = false;
-        P_InGameManager.instance.realTimeResultBtn.interactable = false;
+        if (P_InGameManager.instance != null)
+        {
+            //P_InGameManager.instance.handHistoryBtn.interactable = false;
+            P_InGameManager.instance.chatBtn.interactable = false;
+            P_InGameManager.instance.realTimeResultBtn.interactable = false;
+        }
     }
 
     public void SendCheck(string tableId)
@@ -867,7 +941,8 @@ public class P_SocketController : MonoBehaviour
         request.requestDataStructure = requestStringData;
         P_SocketRequest.Add(request);
 
-        P_InGameUiManager.instance.FoldLoginPlayers(gamePlayerId);
+        if (P_InGameUiManager.instance != null)
+            P_InGameUiManager.instance.FoldLoginPlayers(gamePlayerId);
     }
 
     //public void SendBet(int amountFloat)
@@ -947,6 +1022,7 @@ public class P_SocketController : MonoBehaviour
     public void SendTopUp(float amount)
     {
         string requestStringData = "{\"tableId\":" + TABLE_ID + "," + "\"userId\":" + gamePlayerId + "," + "\"amount\":" + amount + "}";
+
         if (P_GameConstant.enableLog)
             Debug.Log("SendTopUp ---> " + requestStringData);
         object requestObjectData = Json.Decode(requestStringData);
@@ -999,6 +1075,34 @@ public class P_SocketController : MonoBehaviour
         request.requestDataStructure = requestStringData;
         P_SocketRequest.Add(request);
     }
+
+    public void SendToggleMuck(bool toggleValueBool)
+    {
+        string requestStringData = "{\"tableId\":" + TABLE_ID + "," + "\"userId\":" + gamePlayerId + "," + "\"toggle\":" + toggleValueBool.ToString().ToLower() + "}";
+        if (P_GameConstant.enableLog)
+            Debug.Log("SendToggleMuck ---> " + requestStringData);
+        object requestObjectData = Json.Decode(requestStringData);
+        P_SocketRequest request = new P_SocketRequest();
+        request.emitEvent = "TOGGLE_MUCK";
+        request.plainDataToBeSend = null;
+        request.jsonDataToBeSend = requestObjectData;
+        request.requestDataStructure = requestStringData;
+        P_SocketRequest.Add(request);
+    }
+
+    public void SendGameResult()
+    {
+        string requestStringData = "{\"tableId\":" + TABLE_ID + ", \"userId\":" + gamePlayerId + "}";
+        if (P_GameConstant.enableLog)
+            Debug.Log("SendGameResult ---> " + requestStringData);
+        object requestObjectData = Json.Decode(requestStringData);
+        P_SocketRequest request = new P_SocketRequest();
+        request.emitEvent = "GAME_RESULT";
+        request.plainDataToBeSend = null;
+        request.jsonDataToBeSend = requestObjectData;
+        request.requestDataStructure = requestStringData;
+        P_SocketRequest.Add(request);
+    }
     #endregion
 
 
@@ -1006,22 +1110,18 @@ public class P_SocketController : MonoBehaviour
     //when player click on call, raise, check, bet this animation play.
     public IEnumerator BetAmountAnim()
     {
-        for (int i = 0; i < P_InGameManager.instance.playersScript.Length; i++)
+        if (P_InGameManager.instance != null)
         {
-            if (gamePlayerId == currentTurnUserId)
+            for (int i = 0; i < P_InGameManager.instance.playersScript.Count; i++)
             {
-                //Players.instance.betAmount.SetActive(true);
-                //Players.instance.betAmount.transform.GetChild(0).GetComponent<Text>().text = currentBet.ToString();
-                //Players.instance.betAmount.GetComponent<RectTransform>().DOAnchorPos(new Vector2(1, 440), 2f);
-                ////yield return new WaitForSeconds(0.5f);
-                ////Players.instance.betAmount.SetActive(false);
-
-                P_InGameManager.instance.playersScript[0].betAmount.SetActive(true);
-                P_InGameManager.instance.playersScript[0].betAmount.transform.GetChild(0).GetComponent<Text>().text = currentBet.ToString();
-                //P_InGameManager.instance.players[0].GetComponent<P_Players>().betAmount.GetComponent<RectTransform>().DOAnchorPos(new Vector2(1, 450), 1f);
-                yield return new WaitForSeconds(1f);
-                P_InGameManager.instance.playersScript[0].betAmount.SetActive(false);
-                P_InGameManager.instance.playersScript[0].betAmount.GetComponent<RectTransform>().anchoredPosition = new Vector2(1, 75.5f);
+                if (gamePlayerId == currentTurnUserId)
+                {
+                    P_InGameManager.instance.playersScript[0].betAmount.SetActive(true);
+                    P_InGameManager.instance.playersScript[0].betAmount.transform.GetChild(0).GetComponent<Text>().text = currentBet.ToString();
+                    yield return new WaitForSeconds(1f);
+                    P_InGameManager.instance.playersScript[0].betAmount.SetActive(false);
+                    P_InGameManager.instance.playersScript[0].betAmount.GetComponent<RectTransform>().anchoredPosition = new Vector2(1, 75.5f);
+                }
             }
         }
     }

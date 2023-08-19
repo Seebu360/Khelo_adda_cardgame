@@ -78,9 +78,9 @@ public class P_RealTimeResult : MonoBehaviour
 
                     if (PrefsManager.GetPlayerData().userName == data["data"]["result"][i]["username"].ToString())
                     {
-                        gm.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().color = Color.yellow;
-                        gm.transform.Find("BuyIn").GetComponent<TMPro.TextMeshProUGUI>().color = Color.yellow;
-                        gm.transform.Find("Winnings").GetComponent<TMPro.TextMeshProUGUI>().color = Color.yellow;
+                        gm.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().color = Color.blue;
+                        gm.transform.Find("BuyIn").GetComponent<TMPro.TextMeshProUGUI>().color = Color.blue;
+                        gm.transform.Find("Winnings").GetComponent<TMPro.TextMeshProUGUI>().color = Color.blue;
                     }
                     else if (amt <= 0)
                     {
