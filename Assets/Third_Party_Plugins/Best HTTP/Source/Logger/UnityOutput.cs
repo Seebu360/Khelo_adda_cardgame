@@ -19,7 +19,7 @@ namespace BestHTTP.Logger
 
                 case Loglevels.Error:
                 case Loglevels.Exception:
-                    UnityEngine.Debug.LogError(logEntry);
+                    UnityEngine.Debug.LogError(logEntry); 
                     break;
             }
         }
