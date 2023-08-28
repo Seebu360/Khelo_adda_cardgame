@@ -142,7 +142,7 @@ public class P_InGameManager : MonoBehaviour
                 }
                 break;
 
-            
+
         }
 
         for (int i = 0; i < actionButtons.Length; i++)
@@ -760,7 +760,7 @@ public class P_InGameManager : MonoBehaviour
                                 PlayerPrefs.SetInt("isMuckHand", 0);
                             }
                         }
-                        catch(Exception e)
+                        catch (Exception e)
                         {
                             Debug.Log("Exception in Muck playerpref set " + e.Message);
                         }
@@ -1069,7 +1069,7 @@ public class P_InGameManager : MonoBehaviour
 
                     if (!playersScript[tempI].playerData.sixCards[0].transform.parent.gameObject.activeSelf)
                         playersScript[tempI].playerData.sixCards[0].transform.parent.gameObject.SetActive(true);
-                    
+
                     Destroy(gm);
                     playersScript[tempI].playerData.sixCards[tempL].gameObject.SetActive(true);
 

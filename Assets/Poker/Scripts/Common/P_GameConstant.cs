@@ -45,7 +45,9 @@ public enum P_RequestType
     PokerTableList,
     PokerHandHistory,
     PokerLeaderboard,
-    RealtimeResult
+    RealtimeResult,
+    RegisterTournament,
+    DeRegisterTournament
     //GameVarient,
     //GameVarientForGameId,
     //Lobby,
@@ -55,3 +57,4 @@ public enum P_RequestType
     //GetGame,
     //GameHistory
 }
+

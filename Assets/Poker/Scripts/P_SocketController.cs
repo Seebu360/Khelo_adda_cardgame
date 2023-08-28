@@ -222,7 +222,7 @@ public class P_SocketController : MonoBehaviour
         if (P_InGameUiManager.instance != null)
             P_InGameUiManager.instance.tableInfoText.text = gameTableData["table_name"].ToString();
     }
-    
+
     public void Connect(bool isReconnecting = false)
     {
         ResetConnection(isReconnecting);
@@ -293,6 +293,8 @@ public class P_SocketController : MonoBehaviour
         socketManager.Socket.On<string>("SNG_GAME_STARTED", OnSNGGameStartReceived);
         socketManager.Socket.On<string>("SNG_WIN_LOSS", OnSNGWinLossReceived);
         socketManager.Socket.On<string>("GAME_RESULT_RES", OnGameResultResReceived);
+        socketManager.Socket.On<string>("TOURNAMENT_GAME_STARTED", OnTournamentGameStartedReceived);
+        socketManager.Socket.On<string>("TOURNAMENT_WIN_LOSS", OnTournamentWinLossReceived);
 
         socketManager.Open();
     }
@@ -442,7 +444,7 @@ public class P_SocketController : MonoBehaviour
     {
         if (P_GameConstant.enableLog)
             Debug.Log("<color=yellow>DEALER</color>: " + str);
-        
+
         if (P_InGameManager.instance != null)
             P_InGameManager.instance.DealerIconSetTrue(str);
     }
@@ -527,7 +529,7 @@ public class P_SocketController : MonoBehaviour
             //currentBet = int.Parse(data["bet"].ToString());
             //StartCoroutine(BetAmountAnim());
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             if (P_GameConstant.enableLog)
                 Debug.Log(e.Message);
@@ -563,7 +565,7 @@ public class P_SocketController : MonoBehaviour
         else if (P_InGameManager.instance != null)
             P_InGameManager.instance.OnErrorSet(str);
     }
-    
+
     private void OnBestHand(string str)
     {
         if (P_GameConstant.enableLog)
@@ -572,7 +574,7 @@ public class P_SocketController : MonoBehaviour
         if (P_InGameManager.instance != null)
             P_InGameManager.instance.BestHandText(str);
     }
-    
+
     private void OnActionByUser(string str)
     {
         if (P_GameConstant.enableLog)
@@ -614,7 +616,7 @@ public class P_SocketController : MonoBehaviour
             P_Lobby.instance.CreateLobby1Data(str);
         }
     }
-    
+
     private void OnGetTableByGameIdRes(string str)
     {
         if (P_GameConstant.enableLog)
@@ -625,7 +627,7 @@ public class P_SocketController : MonoBehaviour
         if (P_SitNGoDetails.instance != null)
             P_SitNGoDetails.instance.OnSitNGoTableData(str);
     }
-    
+
     private void OnChatReceived(string str)
     {
         if (P_GameConstant.enableLog)
@@ -636,7 +638,7 @@ public class P_SocketController : MonoBehaviour
         if (P_InGameManager.instance != null)
             P_InGameManager.instance.ShowChatOnPlayer(str);
     }
-    
+
     private void OnGetChatReceived(string str)
     {
         if (P_GameConstant.enableLog)
@@ -734,6 +736,83 @@ public class P_SocketController : MonoBehaviour
 
         if (P_RealTimeResultSitNGo.instance != null)
             P_RealTimeResultSitNGo.instance.OnGameResultRes(str);
+    }
+
+    private void OnTournamentGameStartedReceived(string str)
+    {
+        if (P_GameConstant.enableLog)
+            Debug.Log("<color=yellow>TOURNAMENT_GAME_STARTED</color>: " + str);
+
+        if (P_TournamentsDetails.instance != null)
+            P_TournamentsDetails.instance.OnTournamentGameStartedReceived(str);
+
+
+        JsonData data = JsonMapper.ToObject(str);
+        TABLE_ID = data["tableId"].ToString();
+        lobbySelectedGameType = "TOURNAMENT";
+
+        if (!P_MainSceneManager.instance.IsInGameSceneActive())
+        {
+            P_MainSceneManager.instance.ScreenDestroy();
+            P_MainSceneManager.instance.LoadScene(P_MainScenes.InGame);
+        }
+
+        Debug.Log("gameTableMaxPlayers: " + gameTableMaxPlayers);
+        // remaining: seat hide according to lobby maxPlayers
+        if (gameTableMaxPlayers == 6)
+        {
+            for (int i = 0; i < P_InGameManager.instance.allPlayerPos.Count; i++)
+            {
+                if (P_InGameManager.instance.allPlayerPos[i].gameObject.name == "2" || P_InGameManager.instance.allPlayerPos[i].gameObject.name == "6")
+                    P_InGameManager.instance.allPlayerPos[i].gameObject.SetActive(false);
+            }
+        }
+        else if (gameTableMaxPlayers == 4)
+        {
+            for (int i = 0; i < P_InGameManager.instance.allPlayerPos.Count; i++)
+            {
+                if (P_InGameManager.instance.allPlayerPos[i].gameObject.name == "1" || P_InGameManager.instance.allPlayerPos[i].gameObject.name == "7" ||
+                    P_InGameManager.instance.allPlayerPos[i].gameObject.name == "3" || P_InGameManager.instance.allPlayerPos[i].gameObject.name == "5")
+                    P_InGameManager.instance.allPlayerPos[i].gameObject.SetActive(false);
+            }
+        }
+        else if (gameTableMaxPlayers == 2)
+        {
+            for (int i = 0; i < P_InGameManager.instance.allPlayerPos.Count; i++)
+            {
+                if (P_InGameManager.instance.allPlayerPos[i].gameObject.name == "1" || P_InGameManager.instance.allPlayerPos[i].gameObject.name == "2" ||
+                    P_InGameManager.instance.allPlayerPos[i].gameObject.name == "3" || P_InGameManager.instance.allPlayerPos[i].gameObject.name == "5" ||
+                    P_InGameManager.instance.allPlayerPos[i].gameObject.name == "6" || P_InGameManager.instance.allPlayerPos[i].gameObject.name == "7")
+                    P_InGameManager.instance.allPlayerPos[i].gameObject.SetActive(false);
+            }
+        }
+
+        int counterPos = 1;
+        for (int i = P_InGameManager.instance.allPlayerPos.Count - 1; i >= 0; i--)
+        {
+            if (P_InGameManager.instance.allPlayerPos[i].gameObject.activeSelf)
+            {
+                P_InGameManager.instance.allPlayerPos[i].transform.GetChild(0).GetComponent<P_PlayerSeat>().seatNo = counterPos.ToString();
+                counterPos++;
+            }
+            else
+            {
+                Destroy(P_InGameManager.instance.allPlayerPos[i].gameObject);
+                Destroy(P_InGameManager.instance.playersScript[i].gameObject);
+                P_InGameManager.instance.allPlayerPos.Remove(P_InGameManager.instance.allPlayerPos[i]);
+                P_InGameManager.instance.playersScript.Remove(P_InGameManager.instance.playersScript[i]);
+                P_InGameManager.instance.players.Remove(P_InGameManager.instance.players[i]);
+            }
+        }
+    }
+
+    private void OnTournamentWinLossReceived(string str)
+    {
+        if (P_GameConstant.enableLog)
+            Debug.Log("<color=yellow>TOURNAMENT_WIN_LOSS</color>: " + str);
+
+        if (P_InGameUiManager.instance != null)
+            P_InGameUiManager.instance.OnTournamentWinLoss(str);
     }
 
     void OnSocketError(SocketCustomError args)
@@ -1036,7 +1115,7 @@ public class P_SocketController : MonoBehaviour
         if (P_GameConstant.enableLog)
             Debug.Log("isTopUpSended: " + isTopUpSended);
     }
-    
+
     public void SendChatMessage(string userName, string desc, string tableId)
     {
         //string requestStringData = "{\"tableId\":" + TABLE_ID + "," + "\"userId\":" + gamePlayerId + "," + "\"chat\":" + desc + "," + "\"userName\":" + title + "}";
@@ -1098,6 +1177,20 @@ public class P_SocketController : MonoBehaviour
         object requestObjectData = Json.Decode(requestStringData);
         P_SocketRequest request = new P_SocketRequest();
         request.emitEvent = "GAME_RESULT";
+        request.plainDataToBeSend = null;
+        request.jsonDataToBeSend = requestObjectData;
+        request.requestDataStructure = requestStringData;
+        P_SocketRequest.Add(request);
+    }
+
+    public void SendJoinTournament()
+    {
+        string requestStringData = "{\"gameId\":" + gameId + ", \"userId\":" + gamePlayerId + ", \"userName\":\"" + gamePlayerName + "\"}";
+        if (P_GameConstant.enableLog)
+            Debug.Log("SendJoinTournament ---> " + requestStringData);
+        object requestObjectData = Json.Decode(requestStringData);
+        P_SocketRequest request = new P_SocketRequest();
+        request.emitEvent = "JOIN_TOURNAMENT";
         request.plainDataToBeSend = null;
         request.jsonDataToBeSend = requestObjectData;
         request.requestDataStructure = requestStringData;
@@ -1170,10 +1263,10 @@ public class P_SocketController : MonoBehaviour
             {
                 socketManager.Close();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 if (P_GameConstant.enableLog)
-                    Debug.Log("Socket close error: "+ e.Message);
+                    Debug.Log("Socket close error: " + e.Message);
             }
         }
 

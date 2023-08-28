@@ -167,13 +167,13 @@ public class P_InGameUiManager : MonoBehaviour
                     //Canvas.ForceUpdateCanvases();
                     break;
                 case P_InGameScreens.HandHistory:
-                    
+
                     break;
                 case P_InGameScreens.RealTimeResult:
-                    
+
                     break;
                 case P_InGameScreens.Chat:
-                    
+
                     break;
                 case P_InGameScreens.EmojiScreen:
                     //gm.GetComponent<P_EmojiUIScreenManager>().containerVal = emojiContainerVal;
@@ -182,12 +182,12 @@ public class P_InGameUiManager : MonoBehaviour
                     //P_SocketController.instance.joinSimilarTblBtnContainer.gameObject.SetActive(false);
                     break;
 
-                //    case P_InGameScreens.TopUp:
-                //        {
-                //            Debug.Log("Init topUp screen");
-                //            gm.GetComponent<TopUpScript>().Init((float)parameter[0]);
-                //        }
-                //        break;
+                    //    case P_InGameScreens.TopUp:
+                    //        {
+                    //            Debug.Log("Init topUp screen");
+                    //            gm.GetComponent<TopUpScript>().Init((float)parameter[0]);
+                    //        }
+                    //        break;
 
                     //    case P_InGameScreens.RealTimeResult:
                     //        {
@@ -235,7 +235,7 @@ public class P_InGameUiManager : MonoBehaviour
             case P_InGameScreens.TourneyThanksForPlaying:
                 return P_IGScreenLayer.LAYER3;
             //case P_InGameScreens.:
-                //return P_IGScreenLayer.LAYER4;
+            //return P_IGScreenLayer.LAYER4;
             case P_InGameScreens.Message:
             case P_InGameScreens.Loading:
                 return P_IGScreenLayer.LAYER4;
@@ -468,7 +468,29 @@ public class P_InGameUiManager : MonoBehaviour
 
         ShowScreen(P_InGameScreens.SitNGoWinnerLooser);
 
-        if ((bool) data["isWinner"] == true)
+        if ((bool)data["isWinner"] == true)
+        {
+            if (P_SitNGoWinnerLooser.instance != null)
+            {
+                P_SitNGoWinnerLooser.instance.SetWinner(data["amount"].ToString());
+            }
+        }
+        else
+        {
+            if (P_SitNGoWinnerLooser.instance != null)
+            {
+                P_SitNGoWinnerLooser.instance.SetLooser(data["amount"].ToString());
+            }
+        }
+    }
+
+    public void OnTournamentWinLoss(string str)
+    {
+        JsonData data = JsonMapper.ToObject(str);
+
+        ShowScreen(P_InGameScreens.SitNGoWinnerLooser);
+
+        if ((bool)data["isWinner"] == true)
         {
             if (P_SitNGoWinnerLooser.instance != null)
             {
@@ -809,7 +831,7 @@ public class P_InGameUiManager : MonoBehaviour
                 // five card
                 int tempj = j;
                 StartCoroutine(Fade(pl.playerData.sixCards[tempj], 0.5f, false));
-                
+
                 StartCoroutine(P_MainSceneManager.instance.RunAfterDelay(0.5f, () => {
                     for (int k = 0; k < pl.playerData.sixCards.Length; k++)
                     {
@@ -824,7 +846,7 @@ public class P_InGameUiManager : MonoBehaviour
                     }
                 }));
             }
-            
+
 
             if (pl.fold2CardsImage.activeSelf)
                 StartCoroutine(Fade(pl.fold2CardsImage.GetComponent<Image>(), 0.5f, false));
@@ -897,7 +919,7 @@ public class P_InGameUiManager : MonoBehaviour
         for (int i = 0; i < P_InGameManager.instance.playersScript.Count; i++)
         {
             P_Players pl = P_InGameManager.instance.playersScript[i];
-            
+
 
             if (pl.playerData.userId == P_SocketController.instance.gamePlayerId)
             {
@@ -1011,6 +1033,31 @@ public class P_InGameUiManager : MonoBehaviour
             handRankMeterIcons[i].gameObject.SetActive(false);
         }
         handRankHighlightFrame.gameObject.SetActive(false);
+    }
+
+
+
+
+    public void ShowTournamentReBuyPopUp()
+    {
+        reBuyPopUp.SetActive(true);
+    }
+
+    public void ShowTournamentBlindsUpPopUp()
+    {
+        blindsUpPopUp.SetActive(true);
+        StartCoroutine(GlobalGameManager.instance.RunAfterDelay(3f, () => {
+            blindsUpPopUp.SetActive(false);
+            ShowTournamentAddOnPopUp();
+        }));
+    }
+
+    public void ShowTournamentAddOnPopUp()
+    {
+        AddOnPopUp.SetActive(true);
+        StartCoroutine(GlobalGameManager.instance.RunAfterDelay(3f, () => {
+            AddOnPopUp.SetActive(false);
+        }));
     }
 
 

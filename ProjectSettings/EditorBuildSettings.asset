@@ -8,7 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Poker/Graphics/InGame/PlayerDetails/Scenes/GameScene.unity
     guid: 28db1f574a7114ac6bd17bb11a859a9f
-  - enabled: 0
+  - enabled: 1
     path: Assets/Ludo/Scenes/MainScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   m_configObjects: {}

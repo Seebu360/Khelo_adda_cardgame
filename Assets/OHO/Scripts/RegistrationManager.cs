@@ -44,7 +44,7 @@ public class RegistrationManager : MonoBehaviour
     private string registrationEmailSuccess, registrationPasswordSuccess, registrationUserIdSuccess;
     private bool isLoginAfterRegistration;
     string otp;
-    public Text registerTimerText, registertOtpCountText, forgetTimerText, forgetOtpCountText , loginTimerText, LoginOtpCountText;
+    public Text registerTimerText, registertOtpCountText, forgetTimerText, forgetOtpCountText, loginTimerText, LoginOtpCountText;
     Text currentTimerText;
     Dictionary<int, bool> mobileOTOFields = new Dictionary<int, bool>();
     public InputField[] mobilePassFields;
@@ -52,7 +52,7 @@ public class RegistrationManager : MonoBehaviour
     public InputField[] forgetOTPFields;
 
     IEnumerator GetIpAddress()
-    { 
+    {
         using (UnityWebRequest request = UnityWebRequest.Get("https://api.bigdatacloud.net/data/client-ip"))
         {
             yield return request.SendWebRequest();
@@ -68,7 +68,7 @@ public class RegistrationManager : MonoBehaviour
                 Debug.Log("Response => IpAddress: " + data["ipString"].ToString());
                 ipAddress = data["ipString"].ToString();
             }
-        } 
+        }
     }
 
     private void Awake()
@@ -99,7 +99,7 @@ public class RegistrationManager : MonoBehaviour
         deviceId = SystemInfo.deviceUniqueIdentifier;
         deviceType = "Android"; /*"UnityEditor";*/
 #endif
-		Debug.Log(deviceId + " - " + deviceType);
+        Debug.Log(deviceId + " - " + deviceType);
 
         currentTimerText = registerTimerText;
     }
@@ -119,7 +119,8 @@ public class RegistrationManager : MonoBehaviour
             //loginScreen.SetActive(true);
             //signUpScreen.SetActive(false);
         }
-        else {
+        else
+        {
             registrationScreen.SetActive(true);
             //loginScreen.SetActive(false);
             //signUpScreen.SetActive(true);
@@ -135,7 +136,7 @@ public class RegistrationManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-       
+
         /*if(forgotPassword.activeInHierarchy)
         {
             if (timer > 1)
@@ -167,7 +168,7 @@ public class RegistrationManager : MonoBehaviour
         {
             timer -= Time.deltaTime;
             currentTimerText.text = "Request for a new one in <color=#D64F4F>" + timer.ToString("f0") + " Second</color>.";
-           if (loginScreenWithOTP.activeSelf )
+            if (loginScreenWithOTP.activeSelf)
                 currentTimerText.text = "Request for a new one in <color=#D64F4F>" + timer.ToString("f0") + " Second</color>.";
             else
                 currentTimerText.text = string.Format("{0:00}:{1:00}", 0, timer);
@@ -268,7 +269,7 @@ public class RegistrationManager : MonoBehaviour
                             "\"type\":\"" + "1" + "\"," +
                                "\"password\":\"" + createPassword.text + "\"}";
                         WebServices.instance.SendRequest(RequestType.ResetPassword, requestData, true, OnServerResponseFound);
-                        MainDashboardScreen.instance.DestroyScreen(MainDashboardScreen.MainDashboardScreens.Registration);
+                   //     MainDashboardScreen.instance.DestroyScreen(MainDashboardScreen.MainDashboardScreens.Registration);
                     }
                 }
                 break;
@@ -297,7 +298,7 @@ public class RegistrationManager : MonoBehaviour
                             "\"type\":\"" + "2" + "\"," +
                                "\"password\":\"" + newPassword.text + "\"}";
                         WebServices.instance.SendRequest(RequestType.ResetPassword, requestData, true, OnServerResponseFound);
-                        
+
                     }
                 }
                 break;
@@ -353,8 +354,8 @@ public class RegistrationManager : MonoBehaviour
                     }
                     currentTimerText = loginTimerText;
                     timer = 20f;
-                    loginTimerText.text = "Request for a new one in<color=red>"+ forgetMobileNumber.text + "Second</color>" ;
-                 //   OnClickOnButton("openForgetPasswordOtp");
+                    loginTimerText.text = "Request for a new one in<color=red>" + forgetMobileNumber.text + "Second</color>";
+                    //   OnClickOnButton("openForgetPasswordOtp");
                 }
                 break;
 
@@ -905,7 +906,7 @@ public class RegistrationManager : MonoBehaviour
         loginMobileNumber.text = "";
         loginPassword.text = "";
     }
-    
+
     private void ResetLoginWithOtpScreen()
     {
         loginWithOTPMobileNumber.text = "";
@@ -1039,9 +1040,10 @@ public class RegistrationManager : MonoBehaviour
 
                 //loginScreen.SetActive(false);
 
-                //PlayerGameDetails playerData = Utility.ParsePlayerGameData(data);
-                //PlayerManager.instance.SetPlayerGameData(playerData);
-
+            //    PlayerGameDetails playerData = Utility.ParsePlayerGameData(data);
+            //    PlayerManager.instance.SetPlayerGameData(playerData);
+          //      MainDashboardScreen.instance.userNameText.text = data["username"].ToString();
+           //     Debug.Log("test one " + data["status"]["username"].ToString());
                 OnClickOnButton("openSignUpVerification");
                 currentTimerText = registerTimerText;
                 timer = 20f;
@@ -1069,8 +1071,10 @@ public class RegistrationManager : MonoBehaviour
 
                 PlayerGameDetails playerData = Utility.ParsePlayerGameData(data);
                 PlayerManager.instance.SetPlayerGameData(playerData);
-             //   MainDashboardScreen.instance.UpdateUserDetails(data);
-                Debug.Log("Come part1");
+                //   MainDashboardScreen.instance.UpdateUserDetails(data);
+                MainDashboardScreen.instance.userNameText.text = data["data"]["username"].ToString();
+                // data["userName"].ToString();
+                Debug.Log(data["data"]["username"].ToString());
                 if (data["type"].ToString() == "2")
                 {
                     MainDashboardScreen.instance.bottomMenu.SetActive(true);
@@ -1104,7 +1108,7 @@ public class RegistrationManager : MonoBehaviour
                 {
                     Debug.Log("Come");
                     registertOtpCountText.text = "OTP send only <color=black>" + data["data"]["resendCount"].ToString() + " Times</color>";
-                    
+
                 }
                 else if (data["type"].ToString() == "3")
                     forgetOtpCountText.text = "OTP send only <color=black>" + data["data"]["resendCount"].ToString() + " Times</color>";
@@ -1114,7 +1118,7 @@ public class RegistrationManager : MonoBehaviour
                     MainDashboardScreen.instance.ShowMessage(data["message"].ToString());
                     Debug.Log("Come2");
                     LoginOtpCountText.text = "OTP send only <color=black>" + data["data"]["resendCount"].ToString() + " Times</color>";
-                   
+
                 }
             }
             else
@@ -1130,14 +1134,14 @@ public class RegistrationManager : MonoBehaviour
             if (data["statusCode"].ToString() == "200")
             {
                 //OnClickOnButton("openLogin");
-             //    MainDashboardScreen.instance.bottomMenu.SetActive(true);
-             //     MainDashboardScreen.instance.DestroyScreen(MainDashboardScreen.MainDashboardScreens.Registration);
+                    MainDashboardScreen.instance.bottomMenu.SetActive(true);
+                     MainDashboardScreen.instance.DestroyScreen(MainDashboardScreen.MainDashboardScreens.Registration);
                 if (data["type"].ToString() == "2")
                 {
                     createNewPassword.SetActive(false);
                     forgotPasswordSuccess.SetActive(true);
-                } 
-                 //     MainDashboardScreen.instance.ShowMessage("Password changed");
+                }
+                //     MainDashboardScreen.instance.ShowMessage("Password changed");
             }
             else
             {
@@ -1314,7 +1318,7 @@ public class RegistrationManager : MonoBehaviour
         }));
     }
 
-    
+
     public void VerifyMobileOTP(int otpNum)
     {
         if (!string.IsNullOrEmpty(mobilePassFields[otpNum].text))

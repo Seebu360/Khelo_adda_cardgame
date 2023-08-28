@@ -21,10 +21,10 @@ public class P_TableSettings : MonoBehaviour
     public void Start()
     {
         ts = new P_TableSettingClass();
-      //  ts.IsVociemsg = 0;
-      //  ts.IsTextmsg = 0;
-         ts.IsVociemsg = int.Parse(PlayerPrefs.GetString("isVociemsg"));
-         ts.IsTextmsg = int.Parse(PlayerPrefs.GetString("isTextmsg"));
+        ts.IsVociemsg = 0;
+        ts.IsTextmsg = 0;
+         //ts.IsVociemsg = int.Parse(PlayerPrefs.GetString("isVociemsg"));
+         //ts.IsTextmsg = int.Parse(PlayerPrefs.GetString("isTextmsg"));
         ts.Issound = int.Parse(PlayerPrefs.GetString("issound"));
         ts.Isvibrations = int.Parse(PlayerPrefs.GetString("isviberate"));
 
