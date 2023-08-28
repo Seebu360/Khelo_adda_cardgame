@@ -10,6 +10,8 @@ public class P_TableMenu : MonoBehaviour
     public Text userNameText;
     public Image profilePic, frameImage;
     public Transform buttonContainer;
+    public Button topUpBtn;
+    [SerializeField] GameObject leaveSeatMenu;
 
     void Awake()
     {
@@ -18,13 +20,26 @@ public class P_TableMenu : MonoBehaviour
 
     void OnEnable()
     {
-        
+        if (P_SocketController.instance.lobbySelectedGameType == "SIT N GO")
+        {
+            leaveSeatMenu.SetActive(false);
+            topUpBtn.gameObject.SetActive(false);
+        }
     }
 
     void Start()
     {
         userNameText.text = PlayerManager.instance.GetPlayerGameData().userName;
+
+        //if (P_SocketController.instance.gameTypeName == "SIT N GO") //for SIT N GO rule: top-up not allowed
+        //{
+        //    topUpBtn.interactable = false;
+        //    topUpBtn.transform.GetChild(0).GetComponent<Image>().color = new Color32(255, 255, 255, 100);
+        //    topUpBtn.transform.GetChild(1).GetComponent<Text>().color = new Color32(255, 255, 255, 100);
+        //}
     }
+
+
 
     public void OnClickOnButton(string eventName)
     {
@@ -36,10 +51,13 @@ public class P_TableMenu : MonoBehaviour
                         P_InGameUiManager.instance.DestroyScreen(P_InGameScreens.MenuForViewer);
                     else
                         P_InGameUiManager.instance.DestroyScreen(P_InGameScreens.Menu);
-                    
-                    //Canvas socketCanvas = P_SocketController.instance.transform.GetChild(0).GetComponent<Canvas>();
-                    //socketCanvas.sortingOrder = 1;
-                    //Canvas.ForceUpdateCanvases();
+                }
+                break;
+
+            case "openProfile":
+                {
+                    if (P_InGameUiManager.instance != null)
+                        P_InGameUiManager.instance.ShowScreen(P_InGameScreens.Profile);
                 }
                 break;
 
@@ -51,6 +69,9 @@ public class P_TableMenu : MonoBehaviour
 
             case "leave":
                 {
+                    P_InGameUiManager.instance.ShowScreen(P_InGameScreens.Loading);
+                    P_SocketController.instance.isLeaveSeatSended = true;
+
                     if (P_SocketController.instance != null)
                     {
                         if (!P_SocketController.instance.isViewer)
@@ -71,7 +92,7 @@ public class P_TableMenu : MonoBehaviour
 
             case "topup":
                 P_InGameUiManager.instance.isCallFromMenu = true;
-                P_InGameUiManager.instance.p_BuyinPopup.ShowBuyInPopup(true); //P_InGameUiManager.instance.ShowBuyInPopup(true);
+                P_InGameUiManager.instance.p_BuyinPopup.ShowBuyInPopup(true);
                 if (P_InGameUiManager.instance.IsScreenActive(P_InGameScreens.Menu))
                     P_InGameUiManager.instance.DestroyScreen(P_InGameScreens.Menu);
                 if (P_InGameUiManager.instance.IsScreenActive(P_InGameScreens.MenuForViewer))
@@ -113,24 +134,13 @@ public class P_TableMenu : MonoBehaviour
                         {
                             P_SocketController.instance.SendLeaveViewer();
                         }
-                        //StartCoroutine(P_MainSceneManager.instance.RunAfterDelay(0.4f, () =>
-                        //{
-                        //    try
-                        //    {
-                        //        //P_SocketController.instance.SocketClose();
-                                
-                        //    }
-                        //    catch(System.Exception e)
-                        //    {
-                        //        if (P_GameConstant.enableLog)
-                        //            Debug.Log("Socket close: " + e.Message);
-                        //    }
-                        //}));
                         P_SocketController.instance.isJoinSended = false;
                     }
+                    P_InGameUiManager.instance.ShowScreen(P_InGameScreens.Loading);
 
                     P_MainSceneManager.instance.LoadScene(P_MainScenes.LobbyScene);
 
+                    // back to selected lobby
                     StartCoroutine(P_MainSceneManager.instance.RunAfterDelay(0.4f, () =>
                     {
                         if (P_Lobby.instance != null)

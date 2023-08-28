@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class UserProfile : MonoBehaviour
 {
-	[SerializeField] Text displayNameText, mobileNumberText, emailIdText, dobText, panNumText, accountNameText, accountNumText, bankNameText, ifscCodeText, branchAddText;
+	[SerializeField] Text  displayNameText, mobileNumberText, emailIdText, dobText, panNumText, accountNameText, accountNumText, bankNameText, ifscCodeText, branchAddText;
 	[SerializeField] GameObject emailVerifiedTick, mobileVerifiedTick, editBtn;
 
 	// Start is called before the first frame update
@@ -15,6 +15,7 @@ public class UserProfile : MonoBehaviour
 			editBtn.SetActive(false);
 
 		GetUserProfileDetails();
+		Debug.Log("User profile1");
 	}
 
 	public void OnClickOnButton(string eventName)
@@ -32,18 +33,21 @@ public class UserProfile : MonoBehaviour
 
 	private void GetUserProfileDetails()
 	{
+		Debug.Log("User profile1");
 		StartCoroutine(WebServices.instance.GETRequestData(GameConstants.API_URL + "/user/profile", UserProfileDetailsResponse));
 	}
 
 	private void UserProfileDetailsResponse(string serverResponse, bool isErrorMessage, string errorMessage)
 	{
+		Debug.Log("User profile1");
 		Debug.Log("Response => UserDetails: " + serverResponse);
 		JsonData data = JsonMapper.ToObject(serverResponse);
 
 		if (data["statusCode"].ToString() == "200")
 		{
 			Debug.Log("Seebu user profile " + data);
-			displayNameText.text = data["data"]["username"].ToString(); //username
+			MainDashboardScreen.instance.drawerUsernameText.text=MainDashboardScreen.instance.userNameText.text=displayNameText.text = data["data"]["username"].ToString(); //username
+		//MainDashboardScreen.instance.userNameText.text = displayNameText.text;
 			mobileNumberText.text = data["data"]["mobile"].ToString();
 			emailIdText.text = data["data"]["email"].ToString();
 

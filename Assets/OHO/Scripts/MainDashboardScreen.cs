@@ -69,8 +69,11 @@ public class MainDashboardScreen : MonoBehaviour
 
     private void OnEnable()
     {
+         
         userNameText.text = PlayerManager.instance.GetPlayerGameData().userName;
+      //  Debug.Log(displayNameText.text = data["data"]["username"].ToString(););
     }
+  
 
     // Start is called before the first frame update
     void Start()
@@ -179,6 +182,7 @@ public class MainDashboardScreen : MonoBehaviour
         GlobalGameManager.instance.isKYCDone = bool.Parse(data["data"]["is_kyc_done"].ToString());
         PlayerGameDetails playerData = PlayerManager.instance.GetPlayerGameData();
         playerData.userName = userNameText.text = drawerUsernameText.text = data["data"]["username"].ToString();
+        Debug.Log(drawerUsernameText.text + "   " + data["data"]["username"].ToString());
         int bonusAmount = 0;
         int userWallet = 0;
         if (data["data"]["user_wallet"]["bonus_amount"] != null)
@@ -583,5 +587,10 @@ public class MainDashboardScreen : MonoBehaviour
     public void OpenPrivacyPolicyScreen()
     {
         ShowScreen(MainDashboardScreens.PrivacyPolicy);
+    }
+
+    public void DrawerOpen()
+    {
+        drawerUsernameText.text = MainDashboardScreen.instance.userNameText.text;
     }
 }

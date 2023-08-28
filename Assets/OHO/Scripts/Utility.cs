@@ -249,9 +249,9 @@ public class Utility : MonoBehaviour
 			playerData.userId = data["user_id"].ToString();
 		}
         
-        /*if (data["userName"] != null)
-            playerData.userName = data["userName"].ToString();
-        if (data["userLevel"] != null)
+      //  if (data["userName"] != null)
+      //      playerData.userName = data["username"].ToString();
+    /*    if (data["userLevel"] != null)
             playerData.userLevel = data["userLevel"].ToString();
         if (data["countryName"] != null)
             playerData.countryName = data["countryName"].ToString();

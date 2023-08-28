@@ -1,6 +1,8 @@
-using DG.Tweening;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class P_Players : MonoBehaviour
 {
@@ -149,12 +151,12 @@ public class P_Players : MonoBehaviour
             lastActionImage.SetActive(true);
             lastActionImage.GetComponent<Image>().DOFade(0f, 0.5f).From().SetEase(Ease.OutQuad);
         }
-        
+
     }
 
     public void LocalBetRotateManage()
     {
-        if (P_SocketController.instance.isViewer && seat=="0")
+        if (P_SocketController.instance.isViewer && seat == "0")
         {
             SixCardsZeroPosition();
         }

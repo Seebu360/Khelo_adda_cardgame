@@ -519,8 +519,8 @@ public class P_HandHistory : MonoBehaviour
             SummaryPanel.SetActive(false);
             SummaryButtonImage.SetActive(false);
             DetailsButtonImage.SetActive(true);
-            OpenHandDetailsButton.transform.GetChild(0).GetComponent<Text>().color = new Color(0.90f, 0.76f, 0.14f);
-            OpenHandSummaryButton.transform.GetChild(0).GetComponent<Text>().color = new Color(1f, 1f, 1f);
+            OpenHandDetailsButton.transform.GetChild(0).GetComponent<Text>().color = new Color32(210, 33,58,255);
+            OpenHandSummaryButton.transform.GetChild(0).GetComponent<Text>().color = new Color32(0, 0, 0,255);
         }
         else
         {
@@ -528,8 +528,8 @@ public class P_HandHistory : MonoBehaviour
             SummaryPanel.SetActive(true);
             SummaryButtonImage.SetActive(true);
             DetailsButtonImage.SetActive(false);
-            OpenHandSummaryButton.transform.GetChild(0).GetComponent<Text>().color = new Color(0.90f, 0.76f, 0.14f);
-            OpenHandDetailsButton.transform.GetChild(0).GetComponent<Text>().color = new Color(1f, 1f, 1f);
+            OpenHandSummaryButton.transform.GetChild(0).GetComponent<Text>().color = new Color32(210, 33, 58, 255);
+            OpenHandDetailsButton.transform.GetChild(0).GetComponent<Text>().color = new Color32(0, 0, 0, 255);
         }
     }
 

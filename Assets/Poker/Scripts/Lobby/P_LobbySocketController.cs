@@ -203,7 +203,7 @@ public class P_LobbySocketController : MonoBehaviour
         if (P_InGameUiManager.instance != null)
             P_InGameUiManager.instance.tableInfoText.text = gameTableData["table_name"].ToString();
     }
-    
+
     public void Connect(bool isReconnecting = false)
     {
         ResetConnection(isReconnecting);
@@ -414,7 +414,7 @@ public class P_LobbySocketController : MonoBehaviour
     {
         if (P_GameConstant.enableLog)
             Debug.Log("<color=yellow>DEALER</color>: " + str);
-        
+
         P_InGameManager.instance.DealerIconSetTrue(str);
     }
 
@@ -492,7 +492,7 @@ public class P_LobbySocketController : MonoBehaviour
             //currentBet = int.Parse(data["bet"].ToString());
             //StartCoroutine(BetAmountAnim());
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             if (P_GameConstant.enableLog)
                 Debug.Log(e.Message);
@@ -523,7 +523,7 @@ public class P_LobbySocketController : MonoBehaviour
 
         P_InGameManager.instance.OnErrorSet(str);
     }
-    
+
     private void OnBestHand(string str)
     {
         if (P_GameConstant.enableLog)
@@ -531,7 +531,7 @@ public class P_LobbySocketController : MonoBehaviour
 
         P_InGameManager.instance.BestHandText(str);
     }
-    
+
     private void OnActionByUser(string str)
     {
         if (P_GameConstant.enableLog)
@@ -621,10 +621,10 @@ public class P_LobbySocketController : MonoBehaviour
             {
                 socketManager.Close();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 if (P_GameConstant.enableLog)
-                    Debug.Log("Socket close error: "+ e.Message);
+                    Debug.Log("Socket close error: " + e.Message);
             }
         }
 
